@@ -1,0 +1,105 @@
+[
+  {
+    "id": 1,
+    "text": "کالای دیجیتال",
+    "a_attr": {
+      "data_id": 1,
+      "data_parent_id": 0
+    },
+    "children": [
+      {
+        "id": 2,
+        "text": "لپ تاپ",
+        "a_attr": {
+          "data_id": 2,
+          "data_parent_id": 1
+        },
+        "children": [
+          {
+            "id": 3,
+            "text": "لنوو",
+            "a_attr": {
+              "data_id": 3,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          },
+          {
+            "id": 10,
+            "text": "ایسوس",
+            "a_attr": {
+              "data_id": 10,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          },
+          {
+            "id": 11,
+            "text": "اچ پی",
+            "a_attr": {
+              "data_id": 11,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          },
+          {
+            "id": 12,
+            "text": "دل",
+            "a_attr": {
+              "data_id": 12,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          },
+          {
+            "id": 13,
+            "text": "ایسر",
+            "a_attr": {
+              "data_id": 13,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          },
+          {
+            "id": 14,
+            "text": "ام اس آی",
+            "a_attr": {
+              "data_id": 14,
+              "data_parent_id": 2
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          }
+        ],
+        "type": "subcategory"
+      },
+      {
+        "id": 6,
+        "text": "موبایل",
+        "a_attr": {
+          "data_id": 6,
+          "data_parent_id": 1
+        },
+        "children": [
+          {
+            "id": 7,
+            "text": "سامسونگ",
+            "a_attr": {
+              "data_id": 7,
+              "data_parent_id": 6
+            },
+            "children": [],
+            "type": "subcategory_lv2"
+          }
+        ],
+        "type": "subcategory"
+      }
+    ],
+    "type": "default"
+  }
+]

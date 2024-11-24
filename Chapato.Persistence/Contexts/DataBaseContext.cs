@@ -54,6 +54,11 @@ namespace Chapato.Persistence.Contexts
         /////////////////////////////////////////////////////////////////////////Uploads
         public DbSet<UploadedFile> UploadedFiles { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(warnings =>
+                warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SeedData(modelBuilder);
@@ -161,18 +166,12 @@ namespace Chapato.Persistence.Contexts
                     v => JsonConvert.DeserializeObject<List<string>>(v) ?? new List<string>());
 
         }
-
         private void SeedData(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = nameof(UserRoles.Admin) });
-            //modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = nameof(UserRoles.Operator) });
-            //modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = nameof(UserRoles.Customer) });
-
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = UserRoles.Admin });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = UserRoles.Operator });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = UserRoles.Customer });
         }
-
         private void ApplyQueryFilter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
@@ -200,6 +199,7 @@ namespace Chapato.Persistence.Contexts
             modelBuilder.Entity<ColorRepository>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<UploadedFile>().HasQueryFilter(p => !p.IsRemoved);
         }
+
     }
 
 }

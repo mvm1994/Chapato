@@ -1,0 +1,13 @@
+﻿
+.atag_btn_primary {
+    color: #fff !important;
+    background-color: #5a8dee !important;
+    border-color: #5a8dee !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(147, 158, 170, 0.4) !important;
+    margin-top: 1rem;
+}
+
+.CategoryType_Select > option
+{
+    font-family:IRANSans !important;
+}
