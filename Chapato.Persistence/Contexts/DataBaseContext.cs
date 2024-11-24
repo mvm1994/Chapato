@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Chapato.Domain.Entities.Users;
 using Chapato.Domain.Entities.Products;
 using Chapato.Domain.Entities.Uploads;
+using Microsoft.Extensions.Logging;
 
 namespace Chapato.Persistence.Contexts
 {
@@ -56,9 +57,10 @@ namespace Chapato.Persistence.Contexts
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.ConfigureWarnings(warnings =>
-                warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+            optionsBuilder.UseSqlServer("YourConnectionString")
+                          .LogTo(Console.WriteLine, LogLevel.Information);
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SeedData(modelBuilder);

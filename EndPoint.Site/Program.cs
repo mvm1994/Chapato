@@ -37,7 +37,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Chapato_DB"))
-           .ConfigureWarnings(warnings => warnings.Ignore(RelationalEventId.PendingModelChangesWarning)));
+           .ConfigureWarnings(warnings => warnings.Default(WarningBehavior.Ignore)));
+
 
 
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
