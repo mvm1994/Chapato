@@ -1,8 +1,71 @@
-﻿
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
-    ViewData["Title"] = "AddNewCategory";
+    ViewData["Title"] = "لیست دسته بندی ها";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>AddNewCategory</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/customcss/Product/ProductCategory.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/jstree/jstree.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+}
+<div class="row container">
+    <!-- Context Menu -->
+    <div class="col-md-6 col-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">ایجاد دسته بندی جدید</h5>
+                <small class="text-muted float-end primary-font"></small>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="exampleFormControlSelect1" class="form-label">نوع دسته بندی</label>
+                        <select class="form-select CategoryType_Select" id="CategoryType_Select" aria-label="Default select example" onchange="CategoryTypeAction(this.id)">
+                            <option value="1" selected>ایجاد دسته بندی اصلی</option>
+                            <option value="2">ایجاد زیر دسته بندی</option>
+                        </select>
+                    </div>
+                    <div class="mb-3" id="Exist_Category" style="display:none">
+                        <label for="Parent_Categories" class="form-label">دسته بندی های موجود</label>
+                        <select id="Parent_Categories" class="select2 form-select form-select-lg" data-allow-clear="true" asp-items="@ViewBag.Categories">
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="Category_Name">عنوان دسته بندی</label>
+                        <input type="text" class="form-control" id="Category_Name" placeholder="کالای دیجیتال">
+                    </div>
+                    <a class="btn btn-primary atag_btn_primary" onclick="AddNewCategory()">ثبت</a>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="card mb-4">
+            <h5 class="card-header heading-color">لیست دسته بندی ها</h5>
+            <div class="card-body">
+                <div id="jstree-context-menu" class="overflow-auto"></div>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section Scripts {
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/CustomJs/Products/ProductCategory.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/jstree/jstree.js"></script>
+    <script src="~/AdminTemplate/assets/js/extended-ui-treeview.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-selects.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-tagify.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-typeahead.js"></script>
+}
