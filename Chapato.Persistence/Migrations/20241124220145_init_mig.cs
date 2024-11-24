@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Chapato.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class transitrion_database_tables_from_onlineshop_to_chapato : Migration
+    public partial class init_mig : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -683,9 +683,9 @@ namespace Chapato.Persistence.Migrations
                 columns: new[] { "Id", "InsertTime", "IsRemoved", "Name", "RemoveTime", "UpdateTime" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 11, 24, 16, 30, 19, 655, DateTimeKind.Local).AddTicks(8224), false, "ادمین", null, null },
-                    { 2L, new DateTime(2024, 11, 24, 16, 30, 19, 656, DateTimeKind.Local).AddTicks(6900), false, "اپراتور", null, null },
-                    { 3L, new DateTime(2024, 11, 24, 16, 30, 19, 656, DateTimeKind.Local).AddTicks(6992), false, "مشتری", null, null }
+                    { 1L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8236), false, "ادمین", null, null },
+                    { 2L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8402), false, "اپراتور", null, null },
+                    { 3L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8483), false, "مشتری", null, null }
                 });
 
             migrationBuilder.CreateIndex(

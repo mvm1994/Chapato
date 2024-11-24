@@ -37,8 +37,8 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Chapato_DB"))
-           .ConfigureWarnings(warnings => warnings.Default(WarningBehavior.Ignore)));
-
+           .EnableSensitiveDataLogging()
+           .LogTo(Console.WriteLine, LogLevel.Information));
 
 
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();

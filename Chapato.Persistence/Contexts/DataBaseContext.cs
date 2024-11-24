@@ -55,12 +55,6 @@ namespace Chapato.Persistence.Contexts
         /////////////////////////////////////////////////////////////////////////Uploads
         public DbSet<UploadedFile> UploadedFiles { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer("YourConnectionString")
-                          .LogTo(Console.WriteLine, LogLevel.Information);
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SeedData(modelBuilder);

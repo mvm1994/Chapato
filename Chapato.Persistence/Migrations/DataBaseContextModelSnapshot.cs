@@ -17,7 +17,7 @@ namespace Chapato.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -226,7 +226,7 @@ namespace Chapato.Persistence.Migrations
                     b.Property<int>("Price_With_DisCount")
                         .HasColumnType("int");
 
-                    b.PrimitiveCollection<string>("ProductFeatureItems")
+                    b.Property<string>("ProductFeatureItems")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -234,27 +234,27 @@ namespace Chapato.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("ProductUserOptions_Images")
+                    b.Property<string>("ProductUserOptions_Images")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("ProductUserOptions_Items")
+                    b.Property<string>("ProductUserOptions_Items")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("ProductUserOptions_Parents")
+                    b.Property<string>("ProductUserOptions_Parents")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("ProductUserOptions_Titles")
+                    b.Property<string>("ProductUserOptions_Titles")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("ProductUserOptions_ToolTips")
+                    b.Property<string>("ProductUserOptions_ToolTips")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("RelatedProduct")
+                    b.Property<string>("RelatedProduct")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -928,7 +928,7 @@ namespace Chapato.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.PrimitiveCollection<string>("Option_ExtensionList")
+                    b.Property<string>("Option_ExtensionList")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1033,21 +1033,21 @@ namespace Chapato.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2024, 11, 24, 16, 30, 19, 655, DateTimeKind.Local).AddTicks(8224),
+                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8236),
                             IsRemoved = false,
                             Name = "ادمین"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2024, 11, 24, 16, 30, 19, 656, DateTimeKind.Local).AddTicks(6900),
+                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8402),
                             IsRemoved = false,
                             Name = "اپراتور"
                         },
                         new
                         {
                             Id = 3L,
-                            InsertTime = new DateTime(2024, 11, 24, 16, 30, 19, 656, DateTimeKind.Local).AddTicks(6992),
+                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8483),
                             IsRemoved = false,
                             Name = "مشتری"
                         });
