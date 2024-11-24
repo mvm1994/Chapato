@@ -1,0 +1,1634 @@
+﻿@using Microsoft.AspNetCore.Mvc;
+@{
+    Layout = null;
+}
+
+<html lang="fa" class="light-style layout-navbar-fixed layout-menu-fixed" dir="rtl" data-theme="theme-default" data-assets-path="~/AdminTemplate/assets/" data-template="AdminTemplate">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <title>پنل مدیریت | @ViewData["Title"]</title>
+
+    <meta name="description" content="">
+
+    <link href="~/ckeditor/contents.css" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="~/AdminTemplate/assets/img/favicon/favicon.ico">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/fonts/boxicons.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/fonts/fontawesome.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/fonts/flag-icons.css">
+
+    <!-- Core CSS -->
+
+
+    <link rel="stylesheet" href="~/AdminTemplate/assets/css/demo.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/css/rtl/rtl.css">
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="~/AdminTemplate/assets/json/locales/fa.json">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/json/search-vertical.json">
+
+    <!-- Helpers -->
+    <script src="~/AdminTemplate/assets/vendor/js/helpers.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/js/template-customizer.js"></script>
+
+    <script src="~/AdminTemplate/assets/js/config.js"></script>
+    @{
+        if (ViewBag.Mode == "dark")
+        {
+            <link rel="stylesheet" type="text/css" href="~/AdminTemplate/assets/vendor/css/rtl/core-dark.css" class="template-customizer-core-css">
+            <link rel="stylesheet" type="text/css" href="~/AdminTemplate/assets/vendor/css/rtl/theme-default-dark.css" class="template-customizer-theme-css">
+        }
+        else
+        {
+            <link rel="stylesheet" type="text/css" href="~/AdminTemplate/assets/vendor/css/rtl/core.css" class="template-customizer-core-css">
+            <link rel="stylesheet" type="text/css" href="~/AdminTemplate/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css">
+        }
+    }
+
+    <style type="text/css">
+        .layout-menu-fixed .layout-navbar-full .layout-menu,
+        .layout-menu-fixed-offcanvas .layout-navbar-full .layout-menu {
+            top: 62px !important;
+        }
+
+        .layout-page {
+            padding-top: 62px !important;
+        }
+
+        .content-wrapper {
+            padding-bottom: 59.75px !important;
+        }</style>
+
+    <style>
+        #template-customizer {
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol" !important;
+            font-size: inherit !important;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            z-index: 99999999;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 360px;
+            background: #fff;
+            -webkit-box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+            box-shadow: 0 0 20px 0 rgba(0,0,0,.2);
+            -webkit-transition: all .2s ease-in;
+            -o-transition: all .2s ease-in;
+            transition: all .2s ease-in;
+            -webkit-transform: translateX(380px);
+            -ms-transform: translateX(380px);
+            transform: translateX(380px)
+        }
+
+            #template-customizer h5 {
+                position: relative;
+                font-size: 11px;
+                font-weight: 600
+            }
+
+            #template-customizer > h5 {
+                flex: 0 0 auto
+            }
+
+            #template-customizer .disabled {
+                color: #d1d2d3 !important
+            }
+
+            #template-customizer.template-customizer-open {
+                -webkit-transition-delay: .1s;
+                -o-transition-delay: .1s;
+                transition-delay: .1s;
+                -webkit-transform: none !important;
+                -ms-transform: none !important;
+                transform: none !important
+            }
+
+            #template-customizer .template-customizer-open-btn {
+                position: absolute;
+                top: 180px;
+                left: 0;
+                z-index: -1;
+                display: block;
+                width: 42px;
+                height: 42px;
+                border-top-left-radius: 15%;
+                border-bottom-left-radius: 15%;
+                background: #333;
+                color: #fff !important;
+                text-align: center;
+                font-size: 18px !important;
+                line-height: 42px;
+                opacity: 1;
+                -webkit-transition: all .1s linear .2s;
+                -o-transition: all .1s linear .2s;
+                transition: all .1s linear .2s;
+                -webkit-transform: translateX(-62px);
+                -ms-transform: translateX(-62px);
+                transform: translateX(-62px)
+            }
+
+        @@media(max-width: 991.98px) {
+            #template-customizer .template-customizer-open-btn {
+                top: 145px
+            }
+        }
+
+        .dark-style #template-customizer .template-customizer-open-btn {
+            background: #555
+        }
+
+        #template-customizer .template-customizer-open-btn::before {
+            content: "";
+            width: 22px;
+            height: 22px;
+            display: block;
+            background-size: 100% 100%;
+            position: absolute;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAABClJREFUaEPtmY1RFEEQhbsjUCIQIhAiUCNQIxAiECIQIxAiECIAIpAMhAiECIQI2vquZqnZvp6fhb3SK5mqq6Ju92b69bzXf6is+dI1t1+eAfztG5z1BsxsU0S+ici2iPB3vm5E5EpEDlSVv2dZswFIxv8UkZcNy+5EZGcuEHMCOBeR951uvVDVD53vVl+bE8DvDu8Pxtyo6ta/BsByg1R15Bwzqz5/LJgn34CZwfnPInI4BUB6/1hV0cSjVxcAM4PbcBZjL0XklIPN7Is3fLCkdQPpPYw/VNXj5IhPIvJWRIhSl6p60ULWBGBm30Vk123EwRxCuIzWkkjNrCZywith10ewE1Xdq4GoAjCz/RTXW44Ynt+LyBEfT43kYfbj86J3w5Q32DNcRQDpwF+dkQXDMey8xem0L3TEqB4g3PZWad8agBMRgZPeu96D1/C2Zbh3X0p80Op1xxloztN48bMQQNoc7+eLEuAoPSPiIDY4Ooo+E6ixeNXM+D3GERz2U3CIqMstLJUgJQDe+7eq6mub0NYEkLAKwEHkiBQDCZtddZCZ8d6r7JDwFkoARklHRPZUFVDVZWbwGuNrC4EfdOzFrRABh3Wnqhv+d70AEBLGFROPmeHlnM81G69UdSd6IUuM0GgUVn1uqWmg5EmMfBeEyB7Pe3txBkY+rGT8j0J+WXq/BgDkUCaqLgEAnwcRog0veMIqFAAwCy2wnw+bI2GaGboBgF9k5N0o0rUSGUb4eO0BeO9j/GYhkSHMHMTIqwGARX6p6a+nlPBl8kZuXMD9j6pKfF9aZuaFOdJCEL5D4eYb9wCYVCanrBmGyii/tIq+SLj/HQBCaM5bLzwfPqdQ6FpVHyra4IbuVbXaY7dETC2ESPNNWiIOi69CcdgSMXsh4tNSUiklMgwmC0aNd08Y5WAES6HHehM4gu97wyhBgWpgqXsrASglprDy7CwhehMZOSbK6JMSma+Fio1KltCmlBIj7gfZOGx8ppQSXrhzFnOhJ/31BDkjFHRvOd09x0mRBA9SFgxUgHpQg0q0t5ymPMlL+EnldFTfDA0NAmf+OTQ0X0sRouf7NNkYGhrOYNrxtIaGg83MNzVDSe3LXLhP7O/yrCsCz1zlWTpjWkuZAOBpX3yVnLqI1yLCOKU6qMrmP7SSrUEw54XF4WBIK5FxCMOr3lVsfGqNSmPzBXUnJTIX1jyVBq9wO6UObOpgC5GjO98vFKnTdQMZXxEsWZlDiCZMIxAbNxQOqlpVZtobejBaZNoBnRDzMFpkxvTQOD36BlrcySZuI6p1ACB6LU3wWuf5581+oHfD1vi89bz3nFUC8Nm7ZlP3nKkFbM4bWPt/MSFwklprYItwt6cmvpWJ2IVcQBCz6bLysSCv3SaANCiTsnaNRrNRqMXVVT1/BrAqz/buu/Y38Ad3KC5PARej0QAAAABJRU5ErkJggg==);
+            margin: 10px
+        }
+
+        .customizer-hide #template-customizer .template-customizer-open-btn {
+            display: none
+        }
+
+        [dir=rtl] #template-customizer .template-customizer-open-btn {
+            border-radius: 0;
+            border-top-right-radius: 15%;
+            border-bottom-right-radius: 15%
+        }
+
+            [dir=rtl] #template-customizer .template-customizer-open-btn::before {
+                margin-left: -2px
+            }
+
+        #template-customizer.template-customizer-open .template-customizer-open-btn {
+            opacity: 0;
+            -webkit-transition-delay: 0s;
+            -o-transition-delay: 0s;
+            transition-delay: 0s;
+            -webkit-transform: none !important;
+            -ms-transform: none !important;
+            transform: none !important
+        }
+
+        #template-customizer .template-customizer-close-btn {
+            position: absolute;
+            top: 32px;
+            right: 0;
+            display: block;
+            font-size: 20px;
+            -webkit-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%)
+        }
+
+        #template-customizer .template-customizer-inner {
+            position: relative;
+            overflow: auto;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            opacity: 1;
+            -webkit-transition: opacity .2s;
+            -o-transition: opacity .2s;
+            transition: opacity .2s
+        }
+
+            #template-customizer .template-customizer-inner > div:first-child > hr:first-of-type {
+                display: none !important
+            }
+
+            #template-customizer .template-customizer-inner > div:first-child > h5:first-of-type {
+                padding-top: 0 !important
+            }
+
+        #template-customizer .template-customizer-themes-inner {
+            position: relative;
+            opacity: 1;
+            -webkit-transition: opacity .2s;
+            -o-transition: opacity .2s;
+            transition: opacity .2s
+        }
+
+        #template-customizer .template-customizer-theme-item {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            align-items: center;
+            -ms-flex-align: center;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 0 24px;
+            width: 100%;
+            cursor: pointer
+        }
+
+            #template-customizer .template-customizer-theme-item input {
+                position: absolute;
+                z-index: -1;
+                opacity: 0
+            }
+
+                #template-customizer .template-customizer-theme-item input ~ span {
+                    opacity: .25;
+                    -webkit-transition: all .2s;
+                    -o-transition: all .2s;
+                    transition: all .2s
+                }
+
+            #template-customizer .template-customizer-theme-item .template-customizer-theme-checkmark {
+                display: inline-block;
+                width: 6px;
+                height: 12px;
+                border-right: 1px solid;
+                border-bottom: 1px solid;
+                opacity: 0;
+                -webkit-transition: all .2s;
+                -o-transition: all .2s;
+                transition: all .2s;
+                -webkit-transform: rotate(45deg);
+                -ms-transform: rotate(45deg);
+                transform: rotate(45deg)
+            }
+
+        [dir=rtl] #template-customizer .template-customizer-theme-item .template-customizer-theme-checkmark {
+            border-right: none;
+            border-left: 1px solid;
+            -webkit-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg)
+        }
+
+        #template-customizer .template-customizer-theme-item input:checked:not([disabled]) ~ span, #template-customizer .template-customizer-theme-item:hover input:not([disabled]) ~ span {
+            opacity: 1
+        }
+
+            #template-customizer .template-customizer-theme-item input:checked:not([disabled]) ~ span .template-customizer-theme-checkmark {
+                opacity: 1
+            }
+
+        #template-customizer .template-customizer-theme-colors span {
+            display: block;
+            margin: 0 1px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            -webkit-box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset;
+            box-shadow: 0 0 0 1px rgba(0,0,0,.1) inset
+        }
+
+        #template-customizer.template-customizer-loading .template-customizer-inner, #template-customizer.template-customizer-loading-theme .template-customizer-themes-inner {
+            opacity: .2
+        }
+
+            #template-customizer.template-customizer-loading .template-customizer-inner::after, #template-customizer.template-customizer-loading-theme .template-customizer-themes-inner::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 999;
+                display: block
+            }
+
+        .layout-menu-100vh #template-customizer {
+            height: 100vh
+        }
+
+        [dir=rtl] #template-customizer {
+            right: auto;
+            left: 0;
+            -webkit-transform: translateX(-380px);
+            -ms-transform: translateX(-380px);
+            transform: translateX(-380px)
+        }
+
+            [dir=rtl] #template-customizer .template-customizer-open-btn {
+                right: 0;
+                left: auto;
+                -webkit-transform: translateX(62px);
+                -ms-transform: translateX(62px);
+                transform: translateX(62px)
+            }
+
+            [dir=rtl] #template-customizer .template-customizer-close-btn {
+                right: auto;
+                left: 0
+            }
+
+        #template-customizer .template-customizer-layouts-options[disabled] {
+            opacity: .5;
+            pointer-events: none
+        }
+
+        [dir=rtl] .template-customizer-t-style_switch_light {
+            padding-right: 0 !important
+        }</style>
+
+    <style type="text/css">
+        .apexcharts-canvas {
+            position: relative;
+            user-select: none;
+            /* cannot give overflow: hidden as it will crop tooltips which overflow outside chart area */
+        }
+
+
+            /* scrollbar is not visible by default for legend, hence forcing the visibility */
+            .apexcharts-canvas ::-webkit-scrollbar {
+                -webkit-appearance: none;
+                width: 6px;
+            }
+
+            .apexcharts-canvas ::-webkit-scrollbar-thumb {
+                border-radius: 4px;
+                background-color: rgba(0, 0, 0, .5);
+                box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+                -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+            }
+
+
+        .apexcharts-inner {
+            position: relative;
+        }
+
+        .apexcharts-text tspan {
+            font-family: inherit;
+        }
+
+        .legend-mouseover-inactive {
+            transition: 0.15s ease all;
+            opacity: 0.20;
+        }
+
+        .apexcharts-series-collapsed {
+            opacity: 0;
+        }
+
+        .apexcharts-tooltip {
+            border-radius: 5px;
+            box-shadow: 2px 2px 6px -4px #999;
+            cursor: default;
+            font-size: 14px;
+            left: 62px;
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 12;
+            transition: 0.15s ease all;
+        }
+
+            .apexcharts-tooltip.apexcharts-active {
+                opacity: 1;
+                transition: 0.15s ease all;
+            }
+
+            .apexcharts-tooltip.apexcharts-theme-light {
+                border: 1px solid #e3e3e3;
+                background: rgba(255, 255, 255, 0.96);
+            }
+
+            .apexcharts-tooltip.apexcharts-theme-dark {
+                color: #fff;
+                background: rgba(30, 30, 30, 0.8);
+            }
+
+            .apexcharts-tooltip * {
+                font-family: inherit;
+            }
+
+
+        .apexcharts-tooltip-title {
+            padding: 6px;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
+            background: #ECEFF1;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .apexcharts-tooltip.apexcharts-theme-dark .apexcharts-tooltip-title {
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid #333;
+        }
+
+        .apexcharts-tooltip-text-y-value,
+        .apexcharts-tooltip-text-goals-value,
+        .apexcharts-tooltip-text-z-value {
+            display: inline-block;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+            .apexcharts-tooltip-text-y-label:empty,
+            .apexcharts-tooltip-text-y-value:empty,
+            .apexcharts-tooltip-text-goals-label:empty,
+            .apexcharts-tooltip-text-goals-value:empty,
+            .apexcharts-tooltip-text-z-value:empty {
+                display: none;
+            }
+
+        .apexcharts-tooltip-text-y-value,
+        .apexcharts-tooltip-text-goals-value,
+        .apexcharts-tooltip-text-z-value {
+            font-weight: 600;
+        }
+
+        .apexcharts-tooltip-text-goals-label,
+        .apexcharts-tooltip-text-goals-value {
+            padding: 6px 0 5px;
+        }
+
+        .apexcharts-tooltip-goals-group,
+        .apexcharts-tooltip-text-goals-label,
+        .apexcharts-tooltip-text-goals-value {
+            display: flex;
+        }
+
+            .apexcharts-tooltip-text-goals-label:not(:empty),
+            .apexcharts-tooltip-text-goals-value:not(:empty) {
+                margin-top: -6px;
+            }
+
+        .apexcharts-tooltip-marker {
+            width: 12px;
+            height: 12px;
+            position: relative;
+            top: 0px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .apexcharts-tooltip-series-group {
+            padding: 0 10px;
+            display: none;
+            text-align: left;
+            justify-content: left;
+            align-items: center;
+        }
+
+            .apexcharts-tooltip-series-group.apexcharts-active .apexcharts-tooltip-marker {
+                opacity: 1;
+            }
+
+            .apexcharts-tooltip-series-group.apexcharts-active,
+            .apexcharts-tooltip-series-group:last-child {
+                padding-bottom: 4px;
+            }
+
+        .apexcharts-tooltip-series-group-hidden {
+            opacity: 0;
+            height: 0;
+            line-height: 0;
+            padding: 0 !important;
+        }
+
+        .apexcharts-tooltip-y-group {
+            padding: 6px 0 5px;
+        }
+
+        .apexcharts-tooltip-box, .apexcharts-custom-tooltip {
+            padding: 4px 8px;
+        }
+
+        .apexcharts-tooltip-boxPlot {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .apexcharts-tooltip-box > div {
+            margin: 4px 0;
+        }
+
+        .apexcharts-tooltip-box span.value {
+            font-weight: bold;
+        }
+
+        .apexcharts-tooltip-rangebar {
+            padding: 5px 8px;
+        }
+
+            .apexcharts-tooltip-rangebar .category {
+                font-weight: 600;
+                color: #777;
+            }
+
+            .apexcharts-tooltip-rangebar .series-name {
+                font-weight: bold;
+                display: block;
+                margin-bottom: 5px;
+            }
+
+        .apexcharts-xaxistooltip {
+            opacity: 0;
+            padding: 9px 10px;
+            pointer-events: none;
+            color: #373d3f;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+            background: #ECEFF1;
+            border: 1px solid #90A4AE;
+            transition: 0.15s ease all;
+        }
+
+            .apexcharts-xaxistooltip.apexcharts-theme-dark {
+                background: rgba(0, 0, 0, 0.7);
+                border: 1px solid rgba(0, 0, 0, 0.5);
+                color: #fff;
+            }
+
+            .apexcharts-xaxistooltip:after,
+            .apexcharts-xaxistooltip:before {
+                left: 50%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            .apexcharts-xaxistooltip:after {
+                border-color: rgba(236, 239, 241, 0);
+                border-width: 6px;
+                margin-left: -6px;
+            }
+
+            .apexcharts-xaxistooltip:before {
+                border-color: rgba(144, 164, 174, 0);
+                border-width: 7px;
+                margin-left: -7px;
+            }
+
+        .apexcharts-xaxistooltip-bottom:after,
+        .apexcharts-xaxistooltip-bottom:before {
+            bottom: 100%;
+        }
+
+        .apexcharts-xaxistooltip-top:after,
+        .apexcharts-xaxistooltip-top:before {
+            top: 100%;
+        }
+
+        .apexcharts-xaxistooltip-bottom:after {
+            border-bottom-color: #ECEFF1;
+        }
+
+        .apexcharts-xaxistooltip-bottom:before {
+            border-bottom-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:after {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-bottom.apexcharts-theme-dark:before {
+            border-bottom-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-top:after {
+            border-top-color: #ECEFF1
+        }
+
+        .apexcharts-xaxistooltip-top:before {
+            border-top-color: #90A4AE;
+        }
+
+        .apexcharts-xaxistooltip-top.apexcharts-theme-dark:after {
+            border-top-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip-top.apexcharts-theme-dark:before {
+            border-top-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-xaxistooltip.apexcharts-active {
+            opacity: 1;
+            transition: 0.15s ease all;
+        }
+
+        .apexcharts-yaxistooltip {
+            opacity: 0;
+            padding: 4px 10px;
+            pointer-events: none;
+            color: #373d3f;
+            font-size: 13px;
+            text-align: center;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+            background: #ECEFF1;
+            border: 1px solid #90A4AE;
+        }
+
+            .apexcharts-yaxistooltip.apexcharts-theme-dark {
+                background: rgba(0, 0, 0, 0.7);
+                border: 1px solid rgba(0, 0, 0, 0.5);
+                color: #fff;
+            }
+
+            .apexcharts-yaxistooltip:after,
+            .apexcharts-yaxistooltip:before {
+                top: 50%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            .apexcharts-yaxistooltip:after {
+                border-color: rgba(236, 239, 241, 0);
+                border-width: 6px;
+                margin-top: -6px;
+            }
+
+            .apexcharts-yaxistooltip:before {
+                border-color: rgba(144, 164, 174, 0);
+                border-width: 7px;
+                margin-top: -7px;
+            }
+
+        .apexcharts-yaxistooltip-left:after,
+        .apexcharts-yaxistooltip-left:before {
+            left: 100%;
+        }
+
+        .apexcharts-yaxistooltip-right:after,
+        .apexcharts-yaxistooltip-right:before {
+            right: 100%;
+        }
+
+        .apexcharts-yaxistooltip-left:after {
+            border-left-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-left:before {
+            border-left-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip-left.apexcharts-theme-dark:after {
+            border-left-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-left.apexcharts-theme-dark:before {
+            border-left-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-right:after {
+            border-right-color: #ECEFF1;
+        }
+
+        .apexcharts-yaxistooltip-right:before {
+            border-right-color: #90A4AE;
+        }
+
+        .apexcharts-yaxistooltip-right.apexcharts-theme-dark:after {
+            border-right-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip-right.apexcharts-theme-dark:before {
+            border-right-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .apexcharts-yaxistooltip.apexcharts-active {
+            opacity: 1;
+        }
+
+        .apexcharts-yaxistooltip-hidden {
+            display: none;
+        }
+
+        .apexcharts-xcrosshairs,
+        .apexcharts-ycrosshairs {
+            pointer-events: none;
+            opacity: 0;
+            transition: 0.15s ease all;
+        }
+
+            .apexcharts-xcrosshairs.apexcharts-active,
+            .apexcharts-ycrosshairs.apexcharts-active {
+                opacity: 1;
+                transition: 0.15s ease all;
+            }
+
+        .apexcharts-ycrosshairs-hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-selection-rect {
+            cursor: move;
+        }
+
+        .svg_select_boundingRect, .svg_select_points_rot {
+            pointer-events: none;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .apexcharts-selection-rect + g .svg_select_boundingRect,
+        .apexcharts-selection-rect + g .svg_select_points_rot {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .apexcharts-selection-rect + g .svg_select_points_l,
+        .apexcharts-selection-rect + g .svg_select_points_r {
+            cursor: ew-resize;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .svg_select_points {
+            fill: #efefef;
+            stroke: #333;
+            rx: 2;
+        }
+
+        .apexcharts-svg.apexcharts-zoomable.hovering-zoom {
+            cursor: crosshair
+        }
+
+        .apexcharts-svg.apexcharts-zoomable.hovering-pan {
+            cursor: move
+        }
+
+        .apexcharts-zoom-icon,
+        .apexcharts-zoomin-icon,
+        .apexcharts-zoomout-icon,
+        .apexcharts-reset-icon,
+        .apexcharts-pan-icon,
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon,
+        .apexcharts-toolbar-custom-icon {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+            line-height: 24px;
+            color: #6E8192;
+            text-align: center;
+        }
+
+            .apexcharts-zoom-icon svg,
+            .apexcharts-zoomin-icon svg,
+            .apexcharts-zoomout-icon svg,
+            .apexcharts-reset-icon svg,
+            .apexcharts-menu-icon svg {
+                fill: #6E8192;
+            }
+
+            .apexcharts-selection-icon svg {
+                fill: #444;
+                transform: scale(0.76)
+            }
+
+        .apexcharts-theme-dark .apexcharts-zoom-icon svg,
+        .apexcharts-theme-dark .apexcharts-zoomin-icon svg,
+        .apexcharts-theme-dark .apexcharts-zoomout-icon svg,
+        .apexcharts-theme-dark .apexcharts-reset-icon svg,
+        .apexcharts-theme-dark .apexcharts-pan-icon svg,
+        .apexcharts-theme-dark .apexcharts-selection-icon svg,
+        .apexcharts-theme-dark .apexcharts-menu-icon svg,
+        .apexcharts-theme-dark .apexcharts-toolbar-custom-icon svg {
+            fill: #f3f4f5;
+        }
+
+        .apexcharts-canvas .apexcharts-zoom-icon.apexcharts-selected svg,
+        .apexcharts-canvas .apexcharts-selection-icon.apexcharts-selected svg,
+        .apexcharts-canvas .apexcharts-reset-zoom-icon.apexcharts-selected svg {
+            fill: #008FFB;
+        }
+
+        .apexcharts-theme-light .apexcharts-selection-icon:not(.apexcharts-selected):hover svg,
+        .apexcharts-theme-light .apexcharts-zoom-icon:not(.apexcharts-selected):hover svg,
+        .apexcharts-theme-light .apexcharts-zoomin-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-zoomout-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-reset-icon:hover svg,
+        .apexcharts-theme-light .apexcharts-menu-icon:hover svg {
+            fill: #333;
+        }
+
+        .apexcharts-selection-icon,
+        .apexcharts-menu-icon {
+            position: relative;
+        }
+
+        .apexcharts-reset-icon {
+            margin-left: 5px;
+        }
+
+        .apexcharts-zoom-icon,
+        .apexcharts-reset-icon,
+        .apexcharts-menu-icon {
+            transform: scale(0.85);
+        }
+
+        .apexcharts-zoomin-icon,
+        .apexcharts-zoomout-icon {
+            transform: scale(0.7)
+        }
+
+        .apexcharts-zoomout-icon {
+            margin-right: 3px;
+        }
+
+        .apexcharts-pan-icon {
+            transform: scale(0.62);
+            position: relative;
+            left: 1px;
+            top: 0px;
+        }
+
+            .apexcharts-pan-icon svg {
+                fill: #fff;
+                stroke: #6E8192;
+                stroke-width: 2;
+            }
+
+            .apexcharts-pan-icon.apexcharts-selected svg {
+                stroke: #008FFB;
+            }
+
+            .apexcharts-pan-icon:not(.apexcharts-selected):hover svg {
+                stroke: #333;
+            }
+
+        .apexcharts-toolbar {
+            position: absolute;
+            z-index: 11;
+            max-width: 176px;
+            text-align: right;
+            border-radius: 3px;
+            padding: 0px 6px 2px 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .apexcharts-menu {
+            background: #fff;
+            position: absolute;
+            top: 100%;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 3px;
+            right: 10px;
+            opacity: 0;
+            min-width: 110px;
+            transition: 0.15s ease all;
+            pointer-events: none;
+        }
+
+            .apexcharts-menu.apexcharts-menu-open {
+                opacity: 1;
+                pointer-events: all;
+                transition: 0.15s ease all;
+            }
+
+        .apexcharts-menu-item {
+            padding: 6px 7px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .apexcharts-theme-light .apexcharts-menu-item:hover {
+            background: #eee;
+        }
+
+        .apexcharts-theme-dark .apexcharts-menu {
+            background: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
+
+        @@media screen and (min-width: 768px) {
+            .apexcharts-canvas:hover .apexcharts-toolbar {
+                opacity: 1;
+            }
+        }
+
+        .apexcharts-datalabel.apexcharts-element-hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-pie-label,
+        .apexcharts-datalabels,
+        .apexcharts-datalabel,
+        .apexcharts-datalabel-label,
+        .apexcharts-datalabel-value {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .apexcharts-pie-label-delay {
+            opacity: 0;
+            animation-name: opaque;
+            animation-duration: 0.3s;
+            animation-fill-mode: forwards;
+            animation-timing-function: ease;
+        }
+
+        .apexcharts-canvas .apexcharts-element-hidden {
+            opacity: 0;
+        }
+
+        .apexcharts-hide .apexcharts-series-points {
+            opacity: 0;
+        }
+
+        .apexcharts-gridline,
+        .apexcharts-annotation-rect,
+        .apexcharts-tooltip .apexcharts-marker,
+        .apexcharts-area-series .apexcharts-area,
+        .apexcharts-line,
+        .apexcharts-zoom-rect,
+        .apexcharts-toolbar svg,
+        .apexcharts-area-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-line-series .apexcharts-series-markers .apexcharts-marker.no-pointer-events,
+        .apexcharts-radar-series path,
+        .apexcharts-radar-series polygon {
+            pointer-events: none;
+        }
+
+
+        /* markers */
+
+        .apexcharts-marker {
+            transition: 0.15s ease all;
+        }
+
+        @@keyframes opaque {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        /* Resize generated styles */
+
+        @@keyframes resizeanim {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .resize-triggers {
+            animation: 1ms resizeanim;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+            .resize-triggers,
+            .resize-triggers > div,
+            .contract-trigger:before {
+                content: " ";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+
+                .resize-triggers > div {
+                    background: #eee;
+                    overflow: auto;
+                }
+
+        .contract-trigger:before {
+            width: 200%;
+            height: 200%;
+        }</style>
+
+    @RenderSection("Styles")
+</head>
+
+<body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme" style="touch-action: none; user-select: none;">
+                <div class="app-brand demo">
+                    <a href="index.html" class="app-brand-link">
+                        <span class="app-brand-logo demo">
+                            <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                <title>آیکن</title>
+                                <defs>
+                                    <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+                                        <stop stop-color="#5A8DEE" offset="0%"></stop>
+                                        <stop stop-color="#699AF9" offset="100%"></stop>
+                                    </linearGradient>
+                                    <linearGradient x1="0%" y1="0%" x2="100%" y2="100%" id="linearGradient-2">
+                                        <stop stop-color="#FDAC41" offset="0%"></stop>
+                                        <stop stop-color="#E38100" offset="100%"></stop>
+                                    </linearGradient>
+                                </defs>
+                                <g id="Pages" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                    <g id="Login---V2" transform="translate(-667.000000, -290.000000)">
+                                        <g id="Login" transform="translate(519.000000, 244.000000)">
+                                            <g id="Logo" transform="translate(148.000000, 42.000000)">
+                                                <g id="icon" transform="translate(0.000000, 4.000000)">
+                                                    <path d="M13.8863636,4.72727273 C18.9447899,4.72727273 23.0454545,8.82793741 23.0454545,13.8863636 C23.0454545,18.9447899 18.9447899,23.0454545 13.8863636,23.0454545 C8.82793741,23.0454545 4.72727273,18.9447899 4.72727273,13.8863636 C4.72727273,13.5423509 4.74623858,13.2027679 4.78318172,12.8686032 L8.54810407,12.8689442 C8.48567157,13.19852 8.45300462,13.5386269 8.45300462,13.8863636 C8.45300462,16.887125 10.8856023,19.3197227 13.8863636,19.3197227 C16.887125,19.3197227 19.3197227,16.887125 19.3197227,13.8863636 C19.3197227,10.8856023 16.887125,8.45300462 13.8863636,8.45300462 C13.5386269,8.45300462 13.19852,8.48567157 12.8689442,8.54810407 L12.8686032,4.78318172 C13.2027679,4.74623858 13.5423509,4.72727273 13.8863636,4.72727273 Z" id="Combined-Shape" fill="#4880EA"></path>
+                                                    <path d="M13.5909091,1.77272727 C20.4442608,1.77272727 26,7.19618701 26,13.8863636 C26,20.5765403 20.4442608,26 13.5909091,26 C6.73755742,26 1.18181818,20.5765403 1.18181818,13.8863636 C1.18181818,13.540626 1.19665566,13.1982714 1.22574292,12.8598734 L6.30410592,12.859962 C6.25499466,13.1951893 6.22958398,13.5378796 6.22958398,13.8863636 C6.22958398,17.8551125 9.52536149,21.0724191 13.5909091,21.0724191 C17.6564567,21.0724191 20.9522342,17.8551125 20.9522342,13.8863636 C20.9522342,9.91761479 17.6564567,6.70030817 13.5909091,6.70030817 C13.2336969,6.70030817 12.8824272,6.72514561 12.5388136,6.77314791 L12.5392575,1.81561642 C12.8859498,1.78721495 13.2366963,1.77272727 13.5909091,1.77272727 Z" id="Combined-Shape2" fill="url(#linearGradient-1)"></path>
+                                                    <rect id="Rectangle" fill="url(#linearGradient-2)" x="0" y="0" width="7.68181818" height="7.68181818"></rect>
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </svg>
+                        </span>
+                        <span class="app-brand-text demo menu-text fw-bold ms-2">فرست</span>
+                    </a>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                        <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
+                        <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
+                    </a>
+                </div>
+
+                <div class="menu-divider mt-0"></div>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1 ps ps__rtl ps--active-y">
+                    <!-- Dashboards -->
+                    <li class="menu-item">
+                        <a href="~/admin/DashBoard/Index" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div>داشبورد</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                            <div>مدیریت کاربران</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item active">
+                                <a href="~/admin/users/index" class="menu-link">
+                                    <div>لیست کاربران</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="~/admin/users/Create" class="menu-link">
+                                    <div>ثبت نام کاربر جدید</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="~/admin/Categories/AddNewCategory" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-category"></i>
+                            <div>مدیریت دسته بندی ها</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-store"></i>
+                            <div>مدیریت محصولات</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item active">
+                                <a href="~/admin/Products/GetAllProducts" class="menu-link">
+                                    <div>لیست محصولات</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="~/admin/Products/AddNewProduct" class="menu-link">
+                                    <div>افزودن محصول جدید</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="~/admin/Products/AddNewFeature" class="menu-link">
+                                    <div>مدیریت ویژگی ها</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class="menu-icon tf-icons bx bx-file"></i>
+                            <div>مدیریت فایل ها</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item active">
+                                <a href="~/admin/Uploads/Index" class="menu-link">
+                                    <div>لیست فایل ها</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="~/admin/Uploads/Create" class="menu-link">
+                                    <div>افزودن فایل جدید</div>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div>
+                    <div class="ps__rail-y" style="top: 0px; height: 332px; left: 254px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 69px;"></div></div>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+
+                <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="container-fluid">
+                        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                                <i class="bx bx-menu bx-sm"></i>
+                            </a>
+                        </div>
+
+                        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                            <!-- Search -->
+                            <div class="navbar-nav align-items-center" style="display:none !important;"> 
+                                <div class="nav-item navbar-search-wrapper mb-0">
+                                    <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
+                                        <i class="bx bx-search-alt bx-sm"></i>
+                                        <span class="d-none d-md-inline-block text-muted">جستجو <span class="d-inline-block" dir="ltr">(Ctrl+/)</span></span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- /Search -->
+
+                            <ul class="navbar-nav flex-row align-items-center ms-auto">
+                                <!-- Style Switcher -->
+                                <li class="nav-item me-2 me-xl-0">
+                                    <a class="nav-link style-switcher-toggle hide-arrow" href="javascript:void(0);">
+                                        <i id="sb_btn" class="bx bx-sm bx-moon"></i>
+                                    </a>
+                                </li>
+                                <!--/ Style Switcher -->
+                                <!-- Quick links  -->
+                                <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                        <i class="bx bx-grid-alt bx-sm"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end py-0">
+                                        <div class="dropdown-menu-header border-bottom">
+                                            <div class="dropdown-header d-flex align-items-center py-3">
+                                                <h5 class="text-body mb-0 me-auto secondary-font">میانبرها</h5>
+                                                <a href="javascript:void(0)" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="افزودن میانبر" data-bs-original-title="افزودن میانبر"><i class="bx bx-sm bx-plus-circle"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown-shortcuts-list scrollable-container ps ps__rtl">
+                                            <div class="row row-bordered overflow-visible g-0">
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-calendar fs-4"></i>
+                                                    </span>
+                                                    <a href="app-calendar.html" class="stretched-link">تقویم</a>
+                                                    <small class="text-muted mb-0">قرارهای ملاقات</small>
+                                                </div>
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-food-menu fs-4"></i>
+                                                    </span>
+                                                    <a href="app-invoice-list.html" class="stretched-link">برنامه صورتحساب</a>
+                                                    <small class="text-muted mb-0">مدیریت حساب‌ها</small>
+                                                </div>
+                                            </div>
+                                            <div class="row row-bordered overflow-visible g-0">
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-user fs-4"></i>
+                                                    </span>
+                                                    <a href="app-user-list.html" class="stretched-link">برنامه کاربر</a>
+                                                    <small class="text-muted mb-0">مدیریت کاربران</small>
+                                                </div>
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-check-shield fs-4"></i>
+                                                    </span>
+                                                    <a href="app-access-roles.html" class="stretched-link">مدیریت نقش‌‌ها</a>
+                                                    <small class="text-muted mb-0">مجوزها</small>
+                                                </div>
+                                            </div>
+                                            <div class="row row-bordered overflow-visible g-0">
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-pie-chart-alt-2 fs-4"></i>
+                                                    </span>
+                                                    <a href="index.html" class="stretched-link">داشبورد</a>
+                                                    <small class="text-muted mb-0">پروفایل کاربر</small>
+                                                </div>
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-cog fs-4"></i>
+                                                    </span>
+                                                    <a href="pages-account-settings-account.html" class="stretched-link">تنظیمات</a>
+                                                    <small class="text-muted mb-0">تنظیمات حساب</small>
+                                                </div>
+                                            </div>
+                                            <div class="row row-bordered overflow-visible g-0">
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-help-circle fs-4"></i>
+                                                    </span>
+                                                    <a href="pages-help-center-landing.html" class="stretched-link">مرکز راهنمایی</a>
+                                                    <small class="text-muted mb-0">سوالات متداول و مقالات</small>
+                                                </div>
+                                                <div class="dropdown-shortcuts-item col">
+                                                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                                                        <i class="bx bx-window-open fs-4"></i>
+                                                    </span>
+                                                    <a href="modal-examples.html" class="stretched-link">مودال‌ها</a>
+                                                    <small class="text-muted mb-0">پاپ‌آپ‌های کاربردی</small>
+                                                </div>
+                                            </div>
+                                            <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: -13px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <!-- Quick links -->
+                                <!-- Notification -->
+                                <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                        <i class="bx bx-bell bx-sm"></i>
+                                        <span class="badge bg-danger rounded-pill badge-notifications">5</span>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end py-0">
+                                        <li class="dropdown-menu-header border-bottom">
+                                            <div class="dropdown-header d-flex align-items-center py-3">
+                                                <h5 class="text-body mb-0 me-auto secondary-font">اعلان‌ها</h5>
+                                                <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" aria-label="Mark all as read" data-bs-original-title="Mark all as read"><i class="bx fs-4 bx-envelope-open"></i></a>
+                                            </div>
+                                        </li>
+                                        <li class="dropdown-notifications-list scrollable-container ps ps__rtl">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <img src="~/AdminTemplate/assets/img/avatars/1.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">تبریک می‌گوییم کلارک</h6>
+                                                            <p class="mb-1">شما نشان فروشنده برتر ماه را برنده شدید</p>
+                                                            <small class="text-muted">1 ساعت قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <span class="avatar-initial rounded-circle bg-label-danger">اک</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">دیوید بکهام</h6>
+                                                            <p class="mb-1">درخواست شما را قبول کرد.</p>
+                                                            <small class="text-muted">12 ساعت قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <img src="~/AdminTemplate/assets/img/avatars/2.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">پیام جدید</h6>
+                                                            <p class="mb-1">شما پیام جدید از ناتالی دارید</p>
+                                                            <small class="text-muted">1 ساعت قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <span class="avatar-initial rounded-circle bg-label-success"><i class="bx bx-cart"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">هورا! شما سفارش جدید دارید</h6>
+                                                            <p class="mb-1">شرکت گوگل یک سفارش جدید ثبت کرد</p>
+                                                            <small class="text-muted">1 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <img src="~/AdminTemplate/assets/img/avatars/9.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">برنامه مورد تایید قرار گرفت</h6>
+                                                            <p class="mb-1">برنامه پروژه مدیریت شما پذیرفته شد.</p>
+                                                            <small class="text-muted">2 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <span class="avatar-initial rounded-circle bg-label-success"><i class="bx bx-pie-chart-alt"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">گزارش ماهانه ایجاد شد</h6>
+                                                            <p class="mb-1">گزارش ماهانه ماه خرداد ایجاد شد</p>
+                                                            <small class="text-muted">3 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <img src="~/AdminTemplate/assets/img/avatars/5.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">ارسال درخواست ارتباط</h6>
+                                                            <p class="mb-1">پیتر یک درخواست ارتباط برای شما ارسال کرد</p>
+                                                            <small class="text-muted">4 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <img src="~/AdminTemplate/assets/img/avatars/6.png" alt="" class="w-px-40 h-auto rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">پیام جدید از جین</h6>
+                                                            <p class="mb-1">شما پیام جدید از سمت جین دارید</p>
+                                                            <small class="text-muted">5 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item list-group-item-action dropdown-notifications-item marked-as-read">
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0 me-3">
+                                                            <div class="avatar">
+                                                                <span class="avatar-initial rounded-circle bg-label-warning"><i class="bx bx-error"></i></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex-grow-1">
+                                                            <h6 class="mb-1">میزان مصرف CPU بالاست</h6>
+                                                            <p class="mb-1">میران مصرف CPU در حال حاضر 88.63% است</p>
+                                                            <small class="text-muted">5 روز قبل</small>
+                                                        </div>
+                                                        <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                            <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: -13px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div>
+                                        </li>
+                                        <li class="dropdown-menu-footer border-top">
+                                            <a href="javascript:void(0);" class="dropdown-item d-flex justify-content-center p-3">
+                                                مشاهده همه اعلان‌ها
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!--/ Notification -->
+                                <!-- User -->
+                                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                        <div class="avatar avatar-online">
+                                            <img src="~/AdminTemplate/assets/img/avatars/1.png" alt="" class="rounded-circle">
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="pages-account-settings-account.html">
+                                                <div class="d-flex align-items-center">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar avatar-online">
+                                                            <img src="~/AdminTemplate/assets/img/avatars/1.png" alt="" class="rounded-circle">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <span class="fw-semibold d-block">جان اسنو</span>
+                                                        <small>مدیر</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-profile-user.html">
+                                                <i class="bx bx-user me-2"></i>
+                                                <span class="align-middle">پروفایل من</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-account-settings-account.html">
+                                                <i class="bx bx-cog me-2"></i>
+                                                <span class="align-middle">تنظیمات</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-account-settings-billing.html">
+                                                <span class="d-flex align-items-center align-middle">
+                                                    <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
+                                                    <span class="flex-grow-1 align-middle">صورتحساب</span>
+                                                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-help-center-landing.html">
+                                                <i class="bx bx-support me-2"></i>
+                                                <span class="align-middle">راهنمایی</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-faq.html">
+                                                <i class="bx bx-help-circle me-2"></i>
+                                                <span class="align-middle">سوالات متداول</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="pages-pricing.html">
+                                                <i class="bx bx-dollar me-2"></i>
+                                                <span class="align-middle">قیمت گذاری</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown-divider"></div>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="auth-login-cover.html" target="_blank">
+                                                <i class="bx bx-power-off me-2"></i>
+                                                <span class="align-middle">خروج</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!--/ User -->
+                            </ul>
+                        </div>
+
+                        <!-- Search Small Screens -->
+                        <div class="navbar-search-wrapper search-input-wrapper d-none">
+                            <input type="text" class="form-control search-input container-fluid border-0" placeholder="جستجو ..." aria-label="Search...">
+                            <i class="bx bx-x bx-sm search-toggler cursor-pointer"></i>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- / Navbar -->
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    @RenderBody()
+
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-fluid d-flex flex-wrap justify-content-between py-3 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                @* طراحی شده با ❤️ ارائه شده در وب‌سایت
+                                <a href="https://rtl-theme.com" target="_blank" class="footer-link fw-semibold">راست‌چین</a> *@
+                            </div>
+                            <div>
+                                @* <a href="https://rtl-theme.com" class="footer-link me-4" target="_blank">لایسنس</a>
+                                <a href="https://rtl-theme.com" target="_blank" class="footer-link me-4">قالب‌های بیشتر</a>
+
+                                <a href="https://v3dboy.ir/previews/html/frest/documentation" target="_blank" class="footer-link me-4">مستندات</a>
+
+                                <a href="https://rtl-theme.com" target="_blank" class="footer-link d-none d-sm-inline-block">پشتیبانی</a> *@
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- / Footer -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
+            </div>
+            <!-- / Layout page -->
+        </div>
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target" style="touch-action: pan-y; user-select: none;"></div>
+    </div>
+
+    <script src="~/AdminTemplate/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/popper/popper.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/js/bootstrap.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="~/AdminTemplate/assets/vendor/libs/hammer/hammer.js"></script>
+
+    <script src="~/AdminTemplate/assets/vendor/libs/i18n/i18n.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+
+    <script src="~/AdminTemplate/assets/vendor/js/menu.js"></script>
+    <!-- Vendors JS -->
+
+    <script src="~/AdminTemplate/assets/vendor/js/helpers.js"></script>
+
+    <!-- Main JS -->
+    <script src="~/AdminTemplate/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    @* <script src="~/AdminTemplate/assets/js/dashboards-analytics.js"></script> *@
+    <script src="~/ckeditor/ckeditor.js"></script>
+
+    <svg id="SvgjsSvg1597" width="2" height="0" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev" style="overflow: hidden; top: -100%; left: -100%; position: absolute; opacity: 0;"><defs id="SvgjsDefs1598"></defs><polyline id="SvgjsPolyline1599" points="0,0"></polyline><path id="SvgjsPath1600" d="M0 0 "></path></svg>
+    <div id="template-customizer" class="invert-bg-white" style="visibility: visible"> <a href="javascript:void(0)" class="template-customizer-open-btn" tabindex="-1"></a> <div class="p-4 m-0 lh-1 border-bottom template-customizer-header"> <h4 class="template-customizer-t-panel_header mb-2">سفارشی‌سازی قالب</h4> <p class="template-customizer-t-panel_sub_header mb-0">سفارشی‌سازی کرده و به صورت زنده مشاهده کنید</p> <a href="javascript:void(0)" class="btn-close template-customizer-close-btn fw-light px-4 py-2 text-body" tabindex="-1"></a> </div> <div class="template-customizer-inner pt-4"> <div class="template-customizer-theming"> <h5 class="m-0 px-4 py-4 lh-1 text-light d-block"> <span class="template-customizer-t-theming_header">قالب‌بندی</span> </h5> <div class="m-0 px-4 pb-3 template-customizer-themes w-100"> <label for="customizerTheme" class="form-label template-customizer-t-theme_label">قالب‌ها</label> <div class="row row-cols-lg-auto g-3 align-items-center template-customizer-themes-options"><div class="col-12"><div class="form-check"><input class="form-check-input" type="radio" name="themeRadios" id="themeRadiostheme-default" value="theme-default" checked="checked"><label class="form-check-label" for="themeRadiostheme-default">پیش‌فرض</label></div></div><div class="col-12"><div class="form-check"><input class="form-check-input" type="radio" name="themeRadios" id="themeRadiostheme-semi-dark" value="theme-semi-dark"><label class="form-check-label" for="themeRadiostheme-semi-dark">نیمه‌تیره</label></div></div><div class="col-12"><div class="form-check"><input class="form-check-input" type="radio" name="themeRadios" id="themeRadiostheme-bordered" value="theme-bordered"><label class="form-check-label" for="themeRadiostheme-bordered">دورخط‌دار</label></div></div></div> </div> <div class="m-0 px-4 pb-3 pt-1 template-customizer-style w-100"> <label for="customizerStyle" class="form-label d-block template-customizer-t-style_label">استایل (حالت)</label> <label class="switch switch-sm"> <span class="switch-label template-customizer-t-style_switch_light">روشن</span> <input type="checkbox" class="switch-input"> <span class="switch-toggle-slider"> <span class="switch-on"></span> <span class="switch-off"></span> </span> <span class="switch-label template-customizer-t-style_switch_dark">تیره</span> </label> </div> </div> <div class="template-customizer-layout"> <hr class="m-0"> <h5 class="m-0 px-4 py-4 lh-1 text-light d-block"> <span class="template-customizer-t-layout_header">طرح</span> </h5> <div class="m-0 px-4 pb-3 d-block template-customizer-layoutType"> <label for="customizerStyle" class="form-label d-block template-customizer-t-layout_label">طرح (منو)</label> <div class="row row-cols-lg-auto g-3 align-items-center template-customizer-layouts-options"> <div class="col-12"> <div class="form-check"> <input class="form-check-input" type="radio" name="layoutRadios" id="layoutRadios-static" value="static"> <label class="form-check-label template-customizer-t-layout_static" for="layoutRadios-static">ایستا</label> </div> </div> <div class="col-12"> <div class="form-check"> <input class="form-check-input" type="radio" name="layoutRadios" id="layoutRadios-fixed" value="fixed" checked="checked"> <label class="form-check-label template-customizer-t-layout_fixed" for="layoutRadios-fixed">ثابت</label> </div> </div> </div> </div> <label class="m-0 px-4 pb-3 d-flex media align-items-middle justify-content-between template-customizer-layoutNavbarFixed"> <span class="template-customizer-t-layout_navbar_label">نوار ناوبری ثابت</span> <label class="switch switch-sm pe-4"> <input type="checkbox" class="switch-input" checked="checked"> <span class="switch-toggle-slider"> <span class="switch-on"></span> <span class="switch-off"></span> </span> </label> </label> <label class="m-0 px-4 pb-3 d-flex media align-items-middle justify-content-between template-customizer-layoutFooterFixed"> <span class="template-customizer-t-layout_footer_label">فوتر ثابت</span> <label class="switch switch-sm pe-4"> <input type="checkbox" class="switch-input"> <span class="switch-toggle-slider"> <span class="switch-on"></span> <span class="switch-off"></span> </span> </label> </label> <label class="m-0 px-4 pb-3 d-flex media align-items-middle justify-content-between template-customizer-showDropdownOnHover"> <span class="template-customizer-t-layout_dd_open_label">منوی کشویی هنگام هاور</span> <label class="switch switch-sm pe-4"> <input type="checkbox" class="switch-input" checked="checked"> <span class="switch-toggle-slider"> <span class="switch-on"></span> <span class="switch-off"></span> </span> </label> </label> </div> <div class="template-customizer-misc"> <hr class="m-0"> <h5 class="m-0 px-4 py-4 lh-1 text-light d-block"> <span class="template-customizer-t-misc_header">متفرقه</span> </h5> <label class="m-0 px-4 pb-3 d-flex media align-items-middle justify-content-between template-customizer-rtl"> <span class="template-customizer-t-rtl_label">جهت راست به چپ (RTL)</span> <label class="switch switch-sm pe-4"> <input type="checkbox" class="switch-input" checked="checked"> <span class="switch-toggle-slider"> <span class="switch-on"></span> <span class="switch-off"></span> </span> </label> </label> </div> </div> </div>
+    @RenderSection("Scripts");
+</body>
+</html>

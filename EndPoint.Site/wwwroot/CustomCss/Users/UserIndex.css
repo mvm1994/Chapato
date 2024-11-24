@@ -1,0 +1,127 @@
+﻿
+.grid-btn 
+{
+    width: 92px !important;
+    height: 38px !important;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+}
+.grid-btn-disabled 
+{
+    width: auto !important;
+    height: 38px !important;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+}
+.modal-close-btn {
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 100% !important;
+    width: 27px !important;
+    height: 27px !important;
+    background-color: #69809a !important;
+    color: white !important;
+    border: 0px !important;
+}
+
+@media screen and (min-width:992px)
+{
+    .search_box {
+        width:50% !important;
+        box-shadow: unset !important;
+        margin-top: 1.1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .paging_selectbox {
+        width: 25% !important;
+        float: left;
+        text-align: center;
+        /*font-size: 11px;*/
+    }
+}
+
+@media screen and (min-width:810px) and (min-width:810px) {
+
+    .search_box {
+        width: 50% !important;
+        box-shadow: unset !important;
+        margin-top: 1.1rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .paging_selectbox {
+        width: 30% !important;
+        float: left;
+        text-align: center;
+        /*font-size: 11px;*/
+    }
+}
+
+@media screen and (max-width:809px) {
+
+    .search_box {
+        box-shadow: unset !important;
+        margin-bottom: 0.25rem !important;
+    }
+
+    .paging_selectbox {
+        width: 60% !important;
+        float: left;
+        text-align: center;
+        /*font-size: 11px;*/
+    }
+}
+
+#pagingDropDownMenuBtn {
+    display: none !important;
+}
+
+.page-item {
+    border-radius: 0.25rem;
+}
+
+.page-item[area-label="First"],
+.page-item[area-label="Last"],
+.page-item[area-label="Previous"],
+.page-item[area-label="Next"] {
+    font-family: IRANSans !important;
+    font-weight: bold;
+}
+
+
+.page-link {
+    border-radius: 0.25rem;
+}
+
+.paging_parent {
+
+    margin-top: 10px;
+    background-color: #fff;
+    padding: 20px 10px 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-right: 0px !important;
+    margin-left: 0px !important;
+    border-radius: 5px;
+    max-width: 100% !important;
+}
+
+.search_input {
+    border-left: 1px solid #d4d8dd !important;
+    margin-left: 5px !important;
+    border-top-left-radius: 0.25rem !important;
+    border-bottom-left-radius: 0.25rem !important;
+}
+
+.search_btn {
+    height: 43px !important;
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
+    border-top-right-radius: 0.25rem !important;
+    border-bottom-right-radius: 0.25rem !important;
+}
+
+#PageSizeSelect option {
+    font-family: IRANSans !important
+}

@@ -1,0 +1,33 @@
+﻿.noUi-handle::after {
+    left: 17px;
+    display: none !important
+}
+
+.special {
+    color: #651fff !important;
+}
+
+.wonderful {
+    color: #DE314E !important;
+}
+
+.wonderful_title {
+    color: #DE314E !important;
+    border-bottom: 1px solid #DE314E !important
+}
+
+.wonderful_bg {
+    background: #DE314E !important;
+}
+
+.sub-category-list {
+    margin-right: 10px;
+    display: none;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.sub-category-list.show {
+    display: block;
+    max-height: 1000px;
+    opacity: 1;
+}

@@ -1,0 +1,27 @@
+﻿
+label {
+    display: block ruby !important;
+}
+
+select > option {
+    font-family: iransans;
+    font-size: 15px;
+}
+
+@media (min-width: 810px) and (max-width: 810px) {
+
+    .col-md-11 {
+        flex: 0 0 auto;
+        width: 92.43% !important;
+    }
+}
+
+@media (max-width: 809px) {
+    .mobile_width {
+        width: 100% !important;
+    }
+}
+
+.btn_txtcolor {
+    color: white !important;
+}
