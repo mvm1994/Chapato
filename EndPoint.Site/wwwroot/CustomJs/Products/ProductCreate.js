@@ -554,7 +554,7 @@ function Add_FeatTable(number) {
         tableRow.className = "new_feat";
 
         tableRow.innerHTML = `
-            <td>
+            <td style="width: 100% !important;">
                 <input id="Feat_Name" type="text" class="form-control tbl_name_col" style="text-align:center;" placeholder="رنگ" />
             </td>
             <td>
@@ -962,7 +962,7 @@ function GetFeatures_ByCategoryId(categoryId) {
 
             $.each(response.features, function (index, feature) {
                 let tableRow = $(`<tr class="old_feat" data-featureid="${feature.id}"></tr>`).css('borderBottom', '1px solid #777').html(`
-                        <td>
+                        <td style="width: 100% !important;">
                             <input type="text" class="form-control tbl_name_col" style="text-align:center;" placeholder="${feature.displayedName}" value="${feature.displayedName}" data-featureid="${feature.id}" data-initvalue="${feature.displayedName}" onchange="Modify_FeatValue(this, this.dataset.initvalue)" />
                         </td>
                         <td>

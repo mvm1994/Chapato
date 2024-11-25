@@ -1,0 +1,108 @@
+﻿﻿
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ثبت کاربر جدید";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles {
+
+    <link href="~/CustomCss/Users/UserCreate.css" rel="stylesheet" />
+    <link href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.css">
+}
+
+<div class="col-xxl container">
+    <div class="card mb-4">
+        <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">ثبت نام کاربر جدید</h5>
+        </div>
+        <div class="card-body">
+            <form>
+                <div class="row">
+                    <div class="col-lg-4 col-md-11 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">نقش</label>
+                        <div class="col-sm-10 col-md-12 col-lg-10">
+                            <div class="input-group input-group-merge">
+                                <select id="RoleId" name="RoleId" class="selectpicker w-100 mb-2" asp-items="@ViewBag.Roles" data-style="btn-default" multiple data-icon-base="bx" data-tick-icon="bx-check text-primary"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">نام</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-user"></i></span>
+                                <span id="basic-icon-default-fullname2" class="input-group-text" dir="ltr"></span>
+                                <input type="text" class="form-control" id="fullname" placeholder="علی رضایی" aria-label="ali rezaei" aria-describedby="basic-icon-default-fullname2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label text-nowrap" for="basic-icon-default-email">پست الکترونیک</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-envelope"></i></span>
+                                <span id="basic-icon-default-email2" class="input-group-text" dir="ltr"></span>
+                                <input type="text" id="email" class="form-control text-start" placeholder="alirezaie1999@gmail.com" aria-label="alirezaie1999@gmail.com" aria-describedby="basic-icon-default-email2" dir="ltr">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label" for="newPassword">رمز عبور</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
+                                <span id="basic-icon-default-newPassword" class="input-group-text" dir="ltr"></span>
+                                <input class="form-control text-start" type="password" dir="ltr" id="newPassword" name="newPassword" placeholder="············">
+                                <span class="input-group-text cursor-pointer"><i id="newPassword_toggle" class="bx bx-hide" onclick="ChangeTextType(this.id)"></i></span>
+                            </div>
+                            @* <div class="fv-plugins-message-container invalid-feedback"></div> *@
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label text-nowrap" for="confirmPassword">تایید رمز عبور</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-lock-alt"></i></span>
+                                <span id="basic-icon-default-confirmPassword" class="input-group-text" dir="ltr"></span>
+                                <input class="form-control text-start" type="password" dir="ltr" name="confirmPassword" id="confirmPassword" placeholder="············">
+                                <span class="input-group-text cursor-pointer"><i id="confirmPassword_toggle" class="bx bx-hide" onclick="ChangeTextType(this.id)"></i></span>
+                            </div>
+                            @*<div class="fv-plugins-message-container invalid-feedback"></div> *@
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-sm-12">
+                        <a id="RegisterBtn" onclick="RegisterUser()" class="btn btn-primary mt-4 mobile_width btn_txtcolor">ثبت</a>
+                        <a href="~/admin/Users/Index" class="btn btn-secondary me-3 mt-4" style="color:white !important;">
+                            <span class="align-middle">بازگشت</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/CustomJs/Users/UserCreate.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-selects.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-tagify.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-typeahead.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bloodhound/bloodhound.js"></script>
+}

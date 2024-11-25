@@ -1,0 +1,1973 @@
+﻿﻿
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "ثبت محصول جدید";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@section Styles
+{
+
+    <link rel="stylesheet" href="~/sweetalert2/sweetalert2.min.css" />
+    <link rel="stylesheet" href="~/customcss/product/ProductCreate.css" />
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/select2/select2.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/tagify/tagify.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/dropzone/dropzone.css">
+    <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/bootstrap-maxlength/bootstrap-maxlength.css">
+
+    <style>
+
+        .btn-purple
+        {
+            background-color: #BE6EF4;
+            color: #fff;
+            border-color: #BE6EF4;
+            opacity:1;
+        }
+
+        .btn-purple:hover 
+        {
+             background-color: #BE6EF4;
+            color: #fff;
+            border-color: #BE6EF4;
+            opacity:0.8;
+        }
+
+    </style>
+    <style>
+
+        .dz-filename {
+            direction: ltr !important;
+        }
+
+        .parent_color {
+            width: 100% !important;
+            display: flex !important;
+            flex-wrap: wrap !important;
+            margin-top: 30px !important;
+            margin-bottom: 0px !important;
+            padding: 12px !important;
+            justify-content: right !important;
+        }
+
+        .child_color {
+            width: 50px !important;
+            height: 50px !important;
+            border: 1px solid cyan !important;
+            margin-left: 5px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .active_color_list {
+            padding: 20px 10px !important
+        }
+
+        .notactive_color_list {
+            padding: 20px 0px !important
+        }
+
+        @@media screen and (max-width:809px) {
+            .action_btn {
+                width: 45px !important;
+            }
+        }
+
+        #cke_notifications_area_Product_Long_Desc {
+            display: none !important
+        }
+
+        .toggle_btn_padding_right {
+            padding-right: 0px !important;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: end;
+        }
+
+        .flex_class {
+            display: flex;
+        }
+
+        .positive_point {
+            background: rgba(57, 218, 138, 0.08) !important;
+            color: #39da8a !important;
+            border: 1px solid #39da8a !important;
+            text-align: center !important;
+        }
+
+            .positive_point::placeholder {
+                color: #39da8a !important;
+                opacity: 0.5;
+            }
+
+        .negative_point {
+            background: rgba(255, 91, 92, 0.08) !important;
+            color: #ff5b5c !important;
+            border: 1px solid #ff5b5c !important;
+            text-align: center;
+        }
+
+            .negative_point::placeholder {
+                color: #ff5b5c !important;
+                opacity: 0.5;
+            }
+
+        .quality_point_removebtn {
+            color: #ff5b5c !important;
+            height: 42px !important;
+        }
+
+            .quality_point_removebtn:hover {
+                color: white !important;
+            }
+
+        @@media screen and (min-width:992px) 
+        {
+            .delivery_end_chapter {
+                width: 13% !important;
+            }
+
+            .user_option_table_parent {
+                overflow-x: hidden !important;
+                width: 100% !important;
+            }
+
+            .compact-column {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+                width: 1% !important;
+                white-space: nowrap;
+            }
+
+            .js_tbl_list {
+                position: relative !important;
+                overflow: visible !important;
+            }
+
+            .item_table_parent
+            {
+                padding-left: 15px
+            }
+
+            .record_btn_item_parent
+            {
+                padding-left:28px !important;
+            }
+
+            .modal_title_header_display
+            {
+                display:flex;
+                justify-content:space-between;
+            }
+        }
+
+        @@media screen and (min-width:810px) and (max-width:810px) {
+            .delivery_end_chapter {
+                width: 18% !important;
+            }
+
+            .user_option_table_parent {
+                overflow: auto !important;
+                width: 99% !important;
+                margin-right: 3px !important;
+            }
+
+            .compact-column {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+                width: 1% !important;
+                white-space: nowrap;
+            }
+
+            .modal_title_header_display {
+                display: flex;
+                justify-content: space-between;
+            }
+        }
+
+        @@media screen and (max-width:809px) {
+
+            .delivery_end_chapter {
+                width: 71% !important;
+            }
+
+            .user_option_table_parent {
+                overflow: auto !important;
+                width: 98% !important;
+                margin-right: 3px !important;
+            }
+
+            .compact-column {
+                padding-left: 5px !important;
+                padding-right: 5px !important;
+                width: 1% !important;
+                white-space: nowrap;
+            }
+
+            .modal_title_header_display {
+                display: block;
+            }
+        }
+
+        .tooltip-custom,.title-custom
+        {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-custom .tooltip-text, .title-custom .title-text 
+        {
+            font-family: IRANSans;
+            font-size: 12px !important;
+            visibility: hidden;
+            width: 150px;
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 5px;
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .tooltip-custom .tooltip-text::after, .title-custom .title-text::after 
+        {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #000 transparent transparent transparent;
+        }
+
+        .tooltip-custom:hover .tooltip-text, .title-custom:hover .title-text
+        {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .no-dropdown-arrow::after {
+            display: none !important;
+        }
+
+        .disabled_button {
+            opacity: 0.5 !important;
+        }
+
+    </style>
+    <style>
+
+        .pagination-controls {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .pagination-controls button 
+        {
+            background-color: #A9B0B0;
+            border: 1px solid #797979;
+            color: white;
+            padding: 6px 12px;
+            margin: 0 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+            width: 35px;
+            text-align: center;
+        }
+
+        .pagination-controls button:hover {
+            background-color: #8a9a9a;
+            transform: scale(1.05);
+        }
+
+        .pagination-controls button:disabled {
+            background-color: #4385db;
+            cursor: not-allowed;
+        }
+
+        .pagination-controls button:focus {
+            outline: none;
+            box-shadow: 0 0 5px #4385db;
+        }
+
+        @@media (max-width: 768px) {
+            .pagination-controls button {
+                padding: 5px 10px;
+                font-size: 12px;
+                min-width: 28px;
+            }
+        }
+
+    </style>
+}
+
+@* <div class="row container row_padding"> *@
+<div class="container-xxl flex-grow-1 container-p-y row row_padding" style="padding-top:0 !important;margin-top:-4px !important">
+    <div class="col col_padding">
+        <div class="card mb-3">
+            <div class="card-header sticky-element bg-label-secondary d-flex
+                        justify-content-lg-between justify-content-md-between align-items-sm-center flex-column flex-sm-row"
+                 style="background-color: #dbdbdb !important;border-bottom: 1px solid #d4d8dd;padding-top: 15px;padding-bottom: 15px">
+                <div>
+                    <h5 class="card-title mb-sm-0 me-2">افزودن محصول جدید</h5>
+                </div>
+                <div class="action-btns" style="text-align:left">
+                    <button class="btn btn-primary" onclick="AddNewProduct()">ثبت</button>
+                    <a href="~/admin/Products/GetAllProducts" class="btn btn-secondary me-3" style="color:white !important;">
+                        <span class="align-middle">بازگشت</span>
+                    </a>
+                </div>
+            </div>
+            <div class="card-header border-bottom" style="padding-top: 10px !important;">
+                <ul class="nav nav-tabs card-header-tabs primary-font" role="tablist">
+                    <li class="nav-item">
+                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#form-tabs-social" role="tab" aria-selected="true">
+                            عمومی
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-seo" role="tab" aria-selected="false">
+                            سئو
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-categories" role="tab" aria-selected="false">
+                            دسته بندی ها
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-images" role="tab" aria-selected="false" onclick="SetFileType('images')">
+                            تصاویر
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-documents" role="tab" aria-selected="false" onclick="SetFileType('documents')">
+                            اسناد
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-options" role="tab" aria-selected="false">
+                            آپشن ها
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-relatedproducts" role="tab" aria-selected="false">
+                            محصولات مرتبط
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#form-tabs-features" role="tab" aria-selected="false">
+                            مشخصات فنی
+                        </button>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade active show" id="form-tabs-social" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="Brands" class="form-label">انتخاب برند</label>
+                            <div class="input-group" style="width:100% !important">
+                                <select id="Brands" class="select2 form-select form-select-lg" data-allow-clear="true" asp-items="@ViewBag.Brands" onchange="Check_Brand_Value(this.id)"></select>
+                                <button class="btn btn-outline-primary dropdown-toggle custom-width-after" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    عملیات
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li id="add_brand"><a class="dropdown-item btn btn-outline-primary custom-primary-btn" onclick="Show_InsertBrand_Modal()">افزودن برند</a></li>
+                                    <li id="update_brand"><a class="dropdown-item btn btn-outline-success custom-success-btn" onclick="Show_UpdateBrand_Modal()">ویرایش برند</a></li>
+                                    <li id="delete_brand"><a class="dropdown-item btn btn-outline-danger  custom-danger-btn" onclick="DeleteBrand()">حذف برند</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="Existence">وضعیت موجودی</label>
+                            <select id="Existence" class="form-select">
+                                <option value="Exist">موجود</option>
+                                <option value="NotExist">ناموجود</option>
+                                <option value="ExistSoon">در حال تامین موجودی</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label class="form-label" for="Product_Name">نام محصول</label>
+                            <input type="text" id="Product_Name" class="form-control text-center" placeholder="لپ تاپ لنوو مدل G5070">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="Unique_Code">کد یکتا</label>
+                            <input type="text" id="Unique_Code" class="form-control text-center" placeholder="Lenovo_G5070">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label class="form-label" for="Product_Price">قیمت محصول (تومان)</label>
+                            <input type="text" id="Product_Price" class="form-control text-center" placeholder="500,000" onkeyup="Comma(this.id)">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="Product_Inventory">تعداد محصول (موجودی انبار)</label>
+                            <input class="form-control text-center" id="Product_Inventory" type="number" value="1" min="1">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Delivery_Desc">توضیحات تحویل محصول</label>
+                            <input type="text" id="Delivery_Desc" class="form-control" placeholder="مدت زمان تحویل 1 الی 10 روز کاری">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-16">
+                            <label class="form-label" for="Delivery_Period">مدت زمان تحویل محصول</label>
+                            <div class="d-flex">
+                                <span style="font-family:IRANSans;position: relative;top: 10px;margin-left: 10px;">از</span>
+                                <input type="number" id="Delivery_Period_MinTime" class="form-control" min="1" style="text-align:center;margin-left: 10px;" onchange="SetMAxTime(this.value)">
+                                <span style="font-family:IRANSans;position: relative;top: 10px;">تا</span>
+                                <input type="number" id="Delivery_Period_MaxTime" class="form-control" min="1" style="text-align:center;margin-right:10px">
+                                <span class="delivery_end_chapter" style="font-family:IRANSans;margin-right:10px;position:relative;top:10px">روز کاری</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Product_Desc">نقد و بررسی اجمالی محصول</label>
+                            <textarea id="Product_Desc" class="form-control" rows="5" placeholder="این محصول ساخت کمپانی لنوو می باشد"></textarea>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                            <div id="Product_Quality_Points" class="container accordion-item active active_color_list" style="display:block" data-index="">
+                                <h2 id="Product_Quality_Points_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                    <button id="Product_Quality_Points_Toggle_Btn" class="accordion-button toggle_btn_padding_right" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Product_Quality_Points_Items" aria-controls="Product_Quality_Points_Items" onclick="Toggle_Product_Quality_Points()">
+                                        نقاط <span style="color:forestgreen !important;padding-left: 3px !important;padding-right: 3px !important;"> قوت </span> و <span style="color:red !important;padding-right: 3px !important;"> ضعف </span>
+                                    </button>
+                                </h2>
+                                <div id="Product_Quality_Points_Items" class="row collapse show">
+                                    <div class="d-lg-flex d-md-flex d-sm-block" style="margin-top: 20px;">
+                                        <div class="col-lg-6 col-md-6 col-sm-12 option_group">
+                                            <div class="card">
+                                                <h5 class="card-header heading-color">نقاط <span style="color:forestgreen !important;padding-left: 3px !important;"> قوت </span></h5>
+                                                <div id="Positive_Points_Body" class="card-body">
+                                                    <div class="d-flex col-12 container" style="border: 1px solid gray;padding: 11px 10px 10px 10px;border-radius: 5px;">
+                                                        <div class="col-9" style="justify-content:center;margin-left:5px">
+                                                            <input type="text" id="Positive_Points_Text" class="form-control" placeholder="نقاط قوت"
+                                                                   style="width:100%;text-align:right;margin-left:10px" />
+                                                        </div>
+                                                        <div class="col-3" style="text-align:center">
+                                                            <button class="btn btn-primary" style="height: 41px;width:100%" onclick="Add_PositivePoint(document.getElementById('Positive_Points_Text').value)">
+                                                                <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin-top: 10px;margin-bottom: 10px;border: 1px dashed gray;"></div>
+                                                    <table id="Positive_Points_Tbl" style="width:100%">
+                                                        <tbody id="Positive_Points_Tbl_Tbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 col-md-6 col-sm-12 option_group">
+                                            <div class="card">
+                                                <h5 class="card-header heading-color">نقاط <span style="color:red !important;padding-left: 3px !important;"> ضعف </span></h5>
+                                                <div id="Negative_Points_Body" class="card-body">
+                                                    <div class="d-flex col-12 container" style="border: 1px solid gray;padding: 11px 10px 10px 10px;border-radius: 5px;">
+                                                        <div class="col-9" style="justify-content:center;margin-left:5px">
+                                                            <input type="text" id="Negative_Points_Text" class="form-control" placeholder="نقاط ضعف"
+                                                                   style="width:100%;text-align:right;margin-left:10px" />
+                                                        </div>
+                                                        <div class="col-3" style="text-align:center">
+                                                            <button class="btn btn-primary" style="height: 41px;width:100%" onclick="Add_NegativePoint(document.getElementById('Negative_Points_Text').value)">
+                                                                <i class="bx bx-plus"></i>
+                                                                @*<span class="align-middle">افزودن</span> *@
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div style="margin-top: 10px;margin-bottom: 10px;border: 1px dashed gray;"></div>
+                                                    <table id="Negative_Points_Tbl" style="width:100%">
+                                                        <tbody id="Negative_Points_Tbl_Tbody">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                            <div id="Product_Long_Desc" class="container accordion-item active active_color_list" style="display:block" data-index="">
+                                <h2 id="Product_Long_Desc_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                    <button id="Product_Long_Desc_Toggle_Btn" class="accordion-button toggle_btn_padding_right" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Product_Long_Desc_Items" aria-controls="Product_Long_Desc_Items" onclick="Toggle_Product_Long_Desc()">
+                                        توضیحات مفصل نقد و بررسی
+                                    </button>
+                                </h2>
+                                <div id="Product_Long_Desc_Items" class="row collapse show" style="margin-top:20px;">
+                                    <div class="col-md-12">
+                                        <label class="form-label" for="Product_Review_Title">عنوان نقد و بررسی</label>
+                                        <input type="text" id="Product_Review_Title" name="Product_Long_Desc" class="form-control" placeholder="عنوان نقد و بررسی" />
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 15px;">
+                                        <label class="form-label" for="Product_Review_Audio_Link">فایل صوتی</label>
+                                        <input class="form-control" type="text" id="Product_Review_Audio_Link" placeholder="لینک فایل صوتی را وارد کنید" onkeyup="GenerateAudioEmbed()">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 15px;">
+                                        <textarea class="form-control" id="audioEmbedCode" placeholder="کد HTML فایل صوتی در اینجا نمایش داده می‌شود" readonly style="display:none;direction:ltr"></textarea>
+                                        <div id="Audio_Buttons_Parent" class="d-none">
+                                            <button id="Btn_Copy_Audio_Body" class="btn btn-primary mt-4" onclick="CopyToClipboard('audioEmbedCode')" style="margin-left:10px">کپی</button>
+                                            <button id="Btn_Clear_Audio_Input" class="btn btn-success mt-4" onclick="ClearInput('Product_Review_Audio_Link')">بازنشانی</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 15px;">
+                                        <label class="form-label" for="Product_Review_Video_Link">فایل تصویری</label>
+                                        <input class="form-control" type="text" id="Product_Review_Video_Link" placeholder="لینک ویدیو را وارد کنید" onkeyup="GenerateVideoEmbed()">
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 15px;">
+                                        <textarea class="form-control" id="videoEmbedCode" placeholder="کد HTML ویدیو در اینجا نمایش داده می‌شود" readonly style="display:none;direction:ltr"></textarea>
+                                        <div id="Video_Buttons_Parent" class="d-none" style="display:none">
+                                            <button id="Btn_Copy_Video_Body" class="btn btn-primary mt-4" onclick="CopyToClipboard('videoEmbedCode')" style="margin-left:10px">کپی</button>
+                                            <button id="Btn_Clear_Video_Input" class="btn btn-success mt-4" onclick="ClearInput('Product_Review_Video_Link')">بازنشانی</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 15px;">
+                                        <label class="form-label" for="Product_Review_Desc">توضیحات نقد و بررسی</label>
+                                        <textarea id="Product_Review_Desc" name="Product_Review_Desc" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-md-12" style="margin-top: 20px;">
+                                        <button id="Btn_Add_LongDesc_Item" class="btn btn-primary" style="display:block">افزودن</button>
+                                        <div id="Update_Btns_LongDesc" class="flex_class" style="display:none">
+                                            <button id="Btn_Edit_LongDesc_Item" class="btn btn-success" style="margin-left:5px">ویرایش</button>
+                                            <button id="Btn_Refresh_LongDesc_Item" class="btn btn-secondary">بازنشانی</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div id="Review_Options_List" class="col-md-12" style="display:none">
+                            <h4 style="font-family:IRANSans !important">لیست آپشن های نقد و بررسی</h4>
+                            <div id="Product_Review_Long_Desc_List">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <iframe id="video_iframe" class='aparat-music-player-iframe' style="width:100%;border-radius: 8px;padding: 0;border: none;height:510px;display:none" src='' title='Aparat Music Player' frameBorder='0'></iframe>
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Product_Video_Link">لینک ویدئو</label>
+                            <input type="text" id="Product_Video_Link" class="form-control" style="text-align:left" placeholder="https://www.aparat.com/video/video/embed/videohash/zil633r/vt/frame" onkeyup="Show_Video_Iframe(this.value)">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-seo" role="tabpanel">
+                    <div class="row g-3">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Meta_Title">عنوان صفحه (Meta Title)</label>
+                            <input type="text" id="Meta_Title" class="form-control" placeholder="تجربه خرید هوشمند با دیجی کالا">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Meta_Url">لینک صفحه (Meta URL)</label>
+                            <input type="text" id="Meta_Url" class="form-control" placeholder="https://www.digikala.com">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div id="Meta_Keywords_Parent" class="col-md-12 mb-4">
+                            <label for="TagifyBasic" class="form-label">کلمات کلیدی (Meta Keywords)</label>
+                            <input id="TagifyBasic" class="form-control" name="Meta_Keywords" value="دیجی کالا">
+                        </div>
+                    </div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-12">
+                            <label class="form-label" for="Meta_Desc">توضیحات (Meta Description)</label>
+                            <textarea id="Meta_Desc" class="form-control" rows="3" placeholder="اولین پلتفرم فروشگاهی ایران"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-categories" role="tabpanel">
+                    <div id="Categories_Parent" class="col-md-6 mb-4">
+                        <label for="TagifyUserList" class="form-label">انتخاب دسته بندی</label>
+                        <input id="TagifyUserList" name="TagifyUserList" class="form-control" placeholder="انتخاب دسته بندی" value="" style="padding: 2px !important;">
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-images" role="tabpanel">
+                    <div class="col-12">
+                        <div class="card">
+                            <h5 class="card-header heading-color">تصاویر محصول</h5>
+                            <div class="card-body">
+                                <form action="/upload" class="dropzone needsclick" id="dropzone-multi-1">
+                                    <div class="dz-message needsclick">
+                                        فایل‌ها را اینجا رها کنید و یا کلیک کنید
+                                        <span class="note needsclick">(این تنها یک ناحیه رها کردن نمونه است. فایل های انتخاب شده واقعا ارسال <strong>نمی‌شوند</strong>.)</span>
+                                    </div>
+                                    <div class="fallback">
+                                        <input id="product_images" name="file" type="file" multiple>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-documents" role="tabpanel">
+                    <div class="col-12">
+                        <div class="card">
+                            <h5 class="card-header heading-color">اسناد محصول</h5>
+                            <div class="card-body">
+                                <form action="/upload" class="dropzone needsclick" id="dropzone-multi-2">
+                                    <div class="dz-message needsclick">
+                                        فایل‌ها را اینجا رها کنید و یا کلیک کنید
+                                        <span class="note needsclick">(این تنها یک ناحیه رها کردن نمونه است. فایل های انتخاب شده واقعا ارسال <strong>نمی‌شوند</strong>.)</span>
+                                    </div>
+                                    <div class="fallback">
+                                        <input id="product_documents" name="file" type="file" multiple>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-options" role="tabpanel">
+                    <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                        <div id="Product_Color_List" class="container accordion-item active active_color_list" style="display:block">
+                            <h2 id="Product_Color_List_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                <button id="Product_Color_List_ToggleBtn" class="accordion-button toggle_btn_padding_right" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Product_Color_List_Items" aria-controls="Product_Color_List_Items" onclick="Toggle_Product_ColorList()">
+                                    مخزن رنگ
+                                </button>
+                            </h2>
+                            <div id="Product_Color_List_Items" class="row collapse show" style="margin-top:20px;">
+                                <div class="input-group" style="width:100% !important;margin-bottom:20px">
+                                    <select id="Colors" class="select2 form-select form-select-lg" data-allow-clear="true" asp-items="@ViewBag.Colors" onchange="Check_Color_Value(this.id)"></select>
+                                    <button class="btn btn-outline-primary dropdown-toggle custom-width-after-plus" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        عملیات
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li id="add_color"><a class="dropdown-item btn btn-outline-primary custom-primary-btn" onclick="Show_InsertColor_Modal()">افزودن رنگ</a></li>
+                                        <li id="update_color"><a class="dropdown-item btn btn-outline-success custom-success-btn" onclick="Show_UpdateColor_Modal()">ویرایش رنگ</a></li>
+                                        <li id="delete_color"><a class="dropdown-item btn btn-outline-danger  custom-danger-btn" onclick="DeleteColor()">حذف رنگ</a></li>
+                                    </ul>
+                                </div>
+                                <div id="Add_ColorOption_Parent" class="col-5" style="text-align:right">
+                                    <button class="btn btn-primary" style="height: 41px;" onclick="Show_Insert_ColorToList_Modal()">
+                                        <i class="bx bx-plus"></i>
+                                        <span class="align-middle">افزودن آپشن</span>
+                                    </button>
+                                </div>
+                                <table id="Colors_Tbl" class="input-group" style="display:block !important;margin-top:20px !important">
+                                    <tbody id="Colors_Tbl_TBody">
+                                    </tbody>
+                                </table>
+
+                                <div id="Color_List" class="input-group parent_color">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* --------------------------------------------------------------------------------------- *@
+                    <div class="row g-3 mt-1">
+                        <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                            <div id="Product_User_Options" class="container accordion-item active active_color_list" style="display:block" data-index="">
+                                <h2 id="Product_User_Options_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                    <button id="Product_User_Options_Toggle_Btn" class="accordion-button toggle_btn_padding_right" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Product_User_Options_Items" aria-controls="Product_User_Options_Items" onclick="Toggle_Product_User_Options()">
+                                        ورودی های کاربر
+                                    </button>
+                                </h2>
+                                <div id="Product_User_Options_Items" class="row collapse show" style="margin-top:20px;">
+                                    <div id="UserOptions_Operation_Tab" class="col-12 d-lg-flex d-md-block d-sm-block mb-4">
+                                        <div id="UserOptions_Categories_Parent" style="margin-left:12px;margin-bottom:15px" class="col-lg-4">
+                                            <label for="TagifyUserList3" class="form-label">انتخاب دسته بندی</label>
+                                            <input id="TagifyUserList3" name="TagifyUserList3" class="form-control" placeholder="انتخاب دسته بندی" value="" style="padding: 2px !important;">
+                                        </div>
+                                        <div id="UserOptions_Type" style="margin-left:12px;margin-bottom:15px" class="col-lg-4">
+                                            <label for="UserOptions_Type_Select" class="form-label">انتخاب نوع ابزار</label>
+                                            <select id="UserOptions_Type_Select" class="form-select" style="height: 39px !important;font-family:IRANSans !important;">
+                                                <option value='TextArea'>ابزار توضیحات</option>
+                                                <option value='SelectBox'>لیست انتخاب</option>
+                                                <option value='FileUpload'>فایل آپلود</option>
+                                                <option value='RadioButton'>رادیو باتن</option>
+                                                <option value='CheckBox'>چک باکس</option>
+                                            </select>
+                                        </div>
+                                        <div style="height: 39px;margin-top: 26px;margin-bottom:15px" class="col-lg-4">
+                                            <a id="RewiseUserControls_Btn" type="button" class="btn btn-success" style="color:white !important;height: 39px !important;" onclick="RewiseUserControls()">بررسی</a>
+                                            <a id="AddUserControl" type="button" class="btn btn-primary" style="color:white !important;height: 39px !important;" onclick="Show_Insert_UserOption_Modal()">افزودن</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                                        <div id="Rewise_UserControls_Result" class="container accordion-item active active_color_list" style="width: 100%; padding: 0 10px 20px;display:none">
+                                            <h2 id="Rewise_UserControls_Result_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                                <button id="Rewise_UserControls_Result_Toggle_Btn" class="accordion-button toggle_btn_padding_right" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Rewise_UserControls_Result_Items" aria-controls="Rewise_UserControls_Result_Items" onclick="Toggle_Rewise_UserControls_Result_Items()">
+                                                    نتایج بررسی
+                                                </button>
+                                            </h2>
+                                            <div id="Rewise_UserControls_Result_Items" class="row collapse show mt-3" data-catid="">
+                                                <div class="user_option_table_parent">
+                                                    <h5 id="UserOption_Table_Title" style="margin-bottom: 0.5rem !important;">گروه آپشن‌های ‌کاربر</h5>
+                                                    <div id="UserOption_Table_List" class="mb-4 table-responsive js_tbl_list"></div>
+                                                    <h5 id="UserSubOption_Table_Title" style="margin-bottom: 0.5rem !important;display:none">زیر‌گروه آپشن‌های ‌کاربر (سطح 1)</h5>
+                                                    <div id="UserSubOption_Table_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <h5 id="UserSubOption_Childs_Table_Title" style="margin-bottom: 0.5rem !important;display:none">زیر‌گروه آپشن‌های ‌کاربر (سطح 2)</h5>
+                                                    <div id="UserSubOption_Childs_Table_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <div id="UserOption_ToolTips_Tables_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <div id="UserOption_Titles_Tables_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <div id="UserOption_Items_Tables_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <div id="UserOption_Images_Tables_List" class="table-responsive js_tbl_list" style="display:none"></div>
+                                                    <div id="UserOption_NoResult" style="display:none">
+                                                        <div class="col-md-12">
+                                                            <div class="no-products">
+                                                                <div class="icon">
+                                                                    <i class="fas fa-exclamation-triangle"></i>
+                                                                </div>
+                                                                <div id="UserOption_NoResult_Text">لیست آپشن‌ها برای این دسته بندی خالی است!</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @* --------------------------------------------------------------------------------------- *@
+                </div>
+                <div class="tab-pane fade" id="form-tabs-relatedproducts" role="tabpanel">
+                    <div class="d-lg-flex d-md-flex d-sm-block">
+                        <div class="col-lg-12 col-md-12 col-sm-12 accordion accordion-header-primary">
+                            <div id="Related_Product_List" class="container accordion-item active" style="padding:20px 10px;display:none">
+                                <h2 id="Related_Product_List_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Related_Product_List_Items" aria-controls="Related_Product_List_Items" onclick="Toggle_Related_ProductList()">
+                                        لیست محصولات مرتبط
+                                    </button>
+                                </h2>
+                                <div id="Related_Product_List_Items" class="row collapse show" style="margin-top:20px;">
+                                </div>
+                            </div>
+                            <div id="Operation_Tab_Parent" class="operation_tab_parent">
+                                <div id="Operation_Tab" class="col-12 d-lg-flex d-md-block d-sm-block mb-4">
+                                    <div style="margin-left:12px;margin-bottom:15px">
+                                        <label for="Rel_Product_Name" class="form-label">نام محصول</label>
+                                        <input id="Rel_Product_Name" type="text" class="form-control" placeholder="جستجو نام محصول" style="height:39px;" />
+                                    </div>
+                                    <div id="RelProduct_Categories_Parent" style="margin-left:12px;margin-bottom:15px">
+                                        <label for="TagifyUserList2" class="form-label">انتخاب دسته بندی</label>
+                                        <input id="TagifyUserList2" name="TagifyUserList2" class="form-control" placeholder="انتخاب دسته بندی" value="" style="padding: 2px !important;">
+                                    </div>
+                                    <div style="height: 39px;margin-top: 26px;margin-bottom:15px">
+                                        <a id="search" type="button" class="btn btn-success" style="color:white !important;" onclick="SearchProducts()">جستجو</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="Search_Result" class="container accordion-item active" style="padding: 0 10px 20px 10px;display:none">
+                                <h2 id="Search_Result_Header" class="accordion-header" style="border-bottom: 1px solid #bdbdbd !important;border-radius: 5px;">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="true" data-bs-target="#Search_Result_Items" aria-controls="Search_Result_Items" onclick="ToggleSarchResult()">
+                                        نتایج جستجو
+                                    </button>
+                                </h2>
+                                <div id="Search_Result_Items" class="row collapse show" style="margin-top:20px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="form-tabs-features" role="tabpanel">
+                    <article>
+                        <h2 class="params-headline">
+                            <span></span>
+                        </h2>
+                        <section>
+                            <ul id="FeatureList" class="params-list">
+                            </ul>
+                        </section>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Insert Brand Modal -->
+<div class="modal fade" id="Insert_Brand_Modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">افزودن برند جدید</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_Brand_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Add_BrandName">نام برند</label>
+                        <input type="text" class="form-control mt-2" id="Add_BrandName" placeholder="نام برند را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="AddBrand()">ثبت</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_Brand_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update Brand Modal -->
+<div class="modal fade" id="Update_Brand_Modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">ویرایش برند</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_Brand_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Update_BrandName">نام برند</label>
+                        <input type="text" class="form-control mt-2" id="Update_BrandName" placeholder="نام برند را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="UpdateBrand()">ویرایش</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_Brand_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Insert Color Modal -->
+<div class="modal fade" id="Insert_Color_Modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">افزودن رنگ جدید</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_Color_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Add_ColorName">نام رنگ</label>
+                        <input type="text" class="form-control mt-2" id="Add_ColorName" placeholder="نام رنگ را وارد نمایید">
+                    </div>
+                    <div class="form-group">
+                        <label for="Add_ColorHex">کد HEX</label>
+                        <input type="text" class="form-control mt-2" id="Add_ColorHex" placeholder="کد HEX را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="AddColor()">ثبت</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_Color_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update Color Modal -->
+<div class="modal fade" id="Update_Color_Modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">ویرایش رنگ</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_Color_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Update_ColorName">نام رنگ</label>
+                        <input type="text" class="form-control mt-2" id="Update_ColorName" placeholder="نام رنگ را وارد نمایید">
+                    </div>
+                    <div class="form-group">
+                        <label for="Update_ColorHex">کد HEX</label>
+                        <input type="text" class="form-control mt-2" id="Update_ColorHex" placeholder="کد HEX را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="UpdateColor()">ویرایش</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_Color_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Insert ColorToList Modal -->
+<div class="modal fade" id="Insert_ColorToList_Modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">افزودن آپشن رنگ</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_ColorToList_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Insert_SelectColor" class="mb-2">انتخاب رنگ</label>
+                        <select id="Insert_SelectColor" class="select2 form-select form-select-lg" data-allow-clear="true" asp-items="@ViewBag.Colors" onchange="SetColor_For_InsertOption()"></select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_ColorOp_ColorName">نام رنگ</label>
+                        <input type="text" class="form-control mt-2" id="Insert_ColorOp_ColorName" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_ColorOp_ColorHex">کد HEX</label>
+                        <input type="text" class="form-control mt-2" id="Insert_ColorOp_ColorHex" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Add_Color_Diff_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Add_Color_Diff_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید">
+                    </div>
+                    <div class="form-group">
+                        <label for="Add_Color_Inventory">تعداد موجودی</label>
+                        <input type="number" class="form-control mt-2" id="Add_Color_Inventory" value="0" min="0" placeholder="تعداد موجودی را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="AddColorToList()">ثبت</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_ColorToList_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update ColorToList Modal -->
+<div class="modal fade" id="Update_ColorToList_Modal" data-parentid="" data-colorid="">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">ویرایش آپشن رنگ</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_ColorToList_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Update_SelectColor" class="mb-2">انتخاب رنگ</label>
+                        <select id="Update_SelectColor" class="select2 form-select form-select-lg" data-allow-clear="true" asp-items="@ViewBag.Colors" onchange="SetColor_For_UpdateOption()"></select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_ColorOp_ColorName">نام رنگ</label>
+                        <input type="text" class="form-control mt-2" id="Update_ColorOp_ColorName" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_ColorOp_ColorHex">کد HEX</label>
+                        <input type="text" class="form-control mt-2" id="Update_ColorOp_ColorHex" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_Color_Diff_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Update_Color_Diff_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید">
+                    </div>
+                    <div class="form-group">
+                        <label for="Update_Color_Inventory">تعداد موجودی</label>
+                        <input type="number" class="form-control mt-2" id="Update_Color_Inventory" value="0" min="0" placeholder="تعداد موجودی را وارد نمایید">
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="UpdateColorOption()">ویرایش</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_ColorToList_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update UserOption_ToolTip Modal -->
+<div class="modal fade bd-example-modal-lg" id="Update_UserOption_ToolTip_Modal" data-parent_catid="" data-parent_row_id="" data-parent_row_class="" data-parent_data_id="">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">ویرایش متن معرفی</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_ToolTip_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row">
+                    <div id="Update_UserOption_ToolTip_ParentOption_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:block">
+                        <label for="Update_UserOption_ToolTip_ParentOption">انتخاب آپشن والد</label>
+                        <select id="Update_UserOption_ToolTip_ParentOption" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آپشن والد را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div id="Update_UserOption_ToolTip_ParentItem_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:block">
+                        <label for="Update_UserOption_ToolTip_ParentItem">انتخاب آیتم والد</label>
+                        <select id="Update_UserOption_ToolTip_ParentItem" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آیتم والد را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div id="Update_UserOption_ToolTip_ChildItem_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:block">
+                        <label for="Update_UserOption_ToolTip_ChildItem">انتخاب آیتم فرزند</label>
+                        <select id="Update_UserOption_ToolTip_ChildItem" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آیتم فرزند را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4 col-lg-12 col-md-12 col-sm-12">
+                        <label for="Update_ToolTip_Desc_ForUserOption">متن معرفی</label>
+                        <textarea class="form-control mt-2" id="Update_ToolTip_Desc_ForUserOption" rows="5"></textarea>
+                    </div>
+
+                    <div class="form-group mb-2 mt-3 col-lg-12 col-md-12 col-sm-12">
+                        <button id="Add_Or_Update_UserOption_ToolTip" type="button" class="btn btn-success" onclick="Add_Or_Update_UserOption_ToolTip_Func()" data-parent_table_id="" data-parent_row_id="">ویرایش</button>
+                        <button id="Reset_UserOption_ToolTip" type="button" class="btn btn-warning" onclick="Reset_UserOption_ToolTip_Func()">بازنشانی</button>
+                    </div>
+
+                    <div class="w-100 col-12 mt-4">
+                        <div class="modal_title_header_display item_table_parent mb-2 w-100">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <h5 style="margin-bottom: 0.5rem !important;">گروه متن معرفی آپشن</h5>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input id="Update_UserOption_ToolTip_SearchItemInput" type="text" class="form-control" value="" placeholder="جستجو بر اساس مقادیر فیلد ها" onkeyup="Search_Useroption_Item_Func()" />
+                            </div>
+                        </div>
+                        <div class="table-responsive js_tbl_list item_table_parent">
+                            <table id="Update_UserOption_ToolTips_Table" class="table table-striped mb-3" data-parent_table_id="" style="display:none">
+                                <thead id="Update_UserOption_ToolTips_Table_THead" class="table-dark">
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th class="compact-column">متن معرفی</th>
+                                        <th class="compact-column">وضعیت بروزرسانی</th>
+                                        <th class="compact-column">ویرایش</th>
+                                        <th class="compact-column">حذف</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Update_UserOption_ToolTips_Table_TBody" class="table-border-bottom-0">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="Update_UserOption_ToolTips_Table_NoResult" class="item_table_parent" style="display:block">
+                            <div>
+                                <div class="no-products">
+                                    <div class="icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div id="UserOption_NoResult_Text">لیست متن معرفی برای این آپشن خالی است!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="update_tooltips_pagination_controls" class="pagination-controls"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Submit_UserOption_Tooltips_Changes()">اعمال تغییرات</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_ToolTip_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update UserOption_Title Modal -->
+<div class="modal fade bd-example-modal-lg" id="Update_UserOption_Title_Modal" data-parent_catid="" data-parent_row_id="" data-parent_row_class="" data-parent_data_id="">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">ویرایش عنوان</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_Title_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form class="row">
+
+                    <div id="Update_UserOption_Title_ParentOption_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:none">
+                        <label for="Update_UserOption_Title_ParentOption">انتخاب آپشن والد</label>
+                        <select id="Update_UserOption_Title_ParentOption" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آپشن والد را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div id="Update_UserOption_Title_ParentItem_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:none">
+                        <label for="Update_UserOption_Title_ParentItem">انتخاب آیتم والد</label>
+                        <select id="Update_UserOption_Title_ParentItem" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آیتم والد را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div id="Update_UserOption_Title_ChildItem_ParentTag" class="form-group mb-4 col-lg-4 col-md-4 col-sm-12" style="display:none">
+                        <label for="Update_UserOption_Title_ChildItem">انتخاب آیتم فرزند</label>
+                        <select id="Update_UserOption_Title_ChildItem" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آیتم فرزند را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4 col-lg-12 col-md-12 col-sm-12">
+                        <label for="Update_UserOption_Title_Text_ForUserOption">عنوان</label>
+                        <input type="text" class="form-control mt-2" id="Update_UserOption_Title_Text_ForUserOption" placeholder="عنوان را وارد نمایید" />
+                    </div>
+
+                    <div class="form-group mb-2 mt-3 col-lg-12 col-md-12 col-sm-12">
+                        <button type="button" class="btn btn-success" onclick="Update_UserOption_Title()" data-parent_table_id="" data-parent_row_id="">ویرایش</button>
+                        <button type="button" class="btn btn-warning" onclick="Reset_UserOption_Title()">بازنشانی</button>
+                    </div>
+
+                    <div class="w-100 col-12 mt-4">
+                        <div class="modal_title_header_display item_table_parent mb-2 w-100">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <h5 style="margin-bottom: 0.5rem !important;">گروه عناوین آپشن</h5>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input id="Update_UserOption_Title_SearchItemInput" type="text" class="form-control" value="" placeholder="جستجو بر اساس مقادیر فیلد ها" onkeyup="Search_Useroption_Item_Func()" />
+                            </div>
+                        </div>
+                        <div class="table-responsive js_tbl_list item_table_parent">
+                            <table id="Update_UserOption_Titles_Table" class="table table-striped mb-3" data-parent_table_id="" style="display:none">
+                                <thead id="Update_UserOption_Titles_Table_THead" class="table-dark">
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th>آپشن والد</th>
+                                        <th>آیتم والد</th>
+                                        <th>آیتم فرزند</th>
+                                        <th class="compact-column">وضعیت بروزرسانی</th>
+                                        <th class="compact-column">ویرایش</th>
+                                        <th class="compact-column">حذف</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Update_UserOption_Titles_Table_TBody" class="table-border-bottom-0">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="Update_UserOption_Titles_Table_NoResult" class="item_table_parent" style="display:block">
+                            <div>
+                                <div class="no-products">
+                                    <div class="icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div id="UserOption_NoResult_Text">لیست متن معرفی برای این آپشن خالی است!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="update_titles_pagination_controls" class="pagination-controls"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Submit_UserOption_Titles_Changes()">اعمال تغییرات</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_Title_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Insert UserOption Modal -->
+<div class="modal fade" id="Insert_UserOption_Modal" data-id="">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">اطلاعات آپشن کاربر</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_UserOption_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserOption_Category">دسته بندی</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Category" data-catid="" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserOption_Type">انتخاب نوع ابزار</label>
+                        <select id="Insert_UserOption_Type" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;" onchange="CheckOptionType(this.id,this.value)">
+                            <option value='TextArea'>ابزار توضیحات</option>
+                            <option value='SelectBox'>لیست انتخاب</option>
+                            <option value='FileUpload'>فایل آپلود</option>
+                            <option value='RadioButton'>رادیو باتن</option>
+                            <option value='CheckBox'>چک باکس</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserOption_Title">عنوان ابزار</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Title" placeholder="عنوان ابزار را وارد نمایید">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserOption_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید" value="0">
+                    </div>
+                    <div id="Insert_UserOption_FileUpload_Area" style="display:none">
+                        <div class="form-group mb-4 js_insert_useroption_extension">
+                            <label for="Insert_UserOption_Extension">پسوند فایل</label>
+                            <input id="Insert_UserOption_Extension" name="Insert_UserOption_Extension" class="form-control mt-2" placeholder="جستجو و انتخاب پسوند..." style="padding: 2px !important;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserOption_FileSize">حجم فایل (مگابایت)</label>
+                            <input type="number" class="form-control mt-2" id="Insert_UserOption_FileSize" placeholder="حجم فایل (مگابایت) را وارد نمایید" value="0" min="0" max="30">
+                        </div>
+                    </div>
+                    <div id="Insert_UserOption_TextArea_Area" style="display:none">
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserOption_MaxLength">حداکثر تعداد کاراکتر</label>
+                            <input type="number" class="form-control mt-2" id="Insert_UserOption_MaxLength" placeholder="حداکثر تعداد کاراکتر را وارد نمایید" value="0" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserOption_ToolTip">متن معرفی ابزار</label>
+                            <textarea class="form-control mt-2" id="Insert_UserOption_ToolTip" rows="5" placeholder="توضیحات مورد نیاز برای اطلاع کاربر را وارد نمایید..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Insert_UserOption()">افزودن</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_UserOption_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Update UserOption Modal -->
+<div class="modal fade" id="Update_UserOption_Modal" data-id="" data-optionmodel="" data-parenttable="">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">اطلاعات آپشن کاربر</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Update_UserOption_Category">دسته بندی</label>
+                        <input type="text" class="form-control mt-2" id="Update_UserOption_Category" data-catid="" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_UserOption_Type">انتخاب نوع ابزار</label>
+                        <select id="Update_UserOption_Type" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;" onchange="CheckOptionType(this.id,this.value)">
+                            <option value='TextArea'>ابزار توضیحات</option>
+                            <option value='SelectBox'>لیست انتخاب</option>
+                            <option value='FileUpload'>فایل آپلود</option>
+                            <option value='RadioButton'>رادیو باتن</option>
+                            <option value='CheckBox'>چک باکس</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_UserOption_Title">عنوان ابزار</label>
+                        <input type="text" class="form-control mt-2" id="Update_UserOption_Title" placeholder="عنوان ابزار را وارد نمایید">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Update_UserOption_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Update_UserOption_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید" value="0">
+                    </div>
+                    <div id="Update_UserOption_FileUpload_Area" style="display:none">
+                        <div class="form-group mb-4 js_update_useroption_extension">
+                            <label for="Update_UserOption_Extension">پسوند فایل</label>
+                            <input id="Update_UserOption_Extension" name="Update_UserOption_Extension" class="form-control mt-2" placeholder="جستجو و انتخاب پسوند..." style="padding: 2px !important;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="Update_UserOption_FileSize">حجم فایل (مگابایت)</label>
+                            <input type="number" class="form-control mt-2" id="Update_UserOption_FileSize" placeholder="حجم فایل (مگابایت) را وارد نمایید" value="1" min="1" max="30">
+                        </div>
+                    </div>
+                    <div id="Update_UserOption_TextArea_Area" style="display:none">
+                        <div class="form-group mb-4">
+                            <label for="Update_UserOption_MaxLength">حداکثر تعداد کاراکتر</label>
+                            <input type="number" class="form-control mt-2" id="Update_UserOption_MaxLength" placeholder="حداکثر تعداد کاراکتر را وارد نمایید" value="1" min="1">
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="form-group mb-4">
+                            <label for="Update_UserOption_ToolTip">متن معرفی ابزار</label>
+                            <textarea class="form-control mt-2" id="Update_UserOption_ToolTip" rows="5" placeholder="توضیحات مورد نیاز برای اطلاع کاربر را وارد نمایید..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="Update_UserOption()">ویرایش</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Update_UserOption_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Insert UserSubOption Modal -->
+<div class="modal fade" id="Insert_UserSubOption_Modal" data-id="" data-previndex="" data-optionlevel="">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">اطلاعات زیرگروه آپشن کاربر</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_UserSubOption_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserSubOption_Category">دسته بندی</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserSubOption_Category" data-catid="" disabled>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserSubOption_Type">انتخاب نوع ابزار</label>
+                        <select id="Insert_UserSubOption_Type" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;" onchange="CheckOptionType(this.id,this.value)">
+                            <option value='TextArea'>ابزار توضیحات</option>
+                            <option value='SelectBox'>لیست انتخاب</option>
+                            <option value='FileUpload'>فایل آپلود</option>
+                            <option value='RadioButton'>رادیو باتن</option>
+                            <option value='CheckBox'>چک باکس</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserSubOption_Title">عنوان ابزار</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserSubOption_Title" placeholder="عنوان ابزار را وارد نمایید">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="Insert_UserSubOption_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserSubOption_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید" value="0">
+                    </div>
+                    <div id="Insert_UserSubOption_FileUpload_Area" style="display:none">
+                        <div class="form-group mb-4 js_insert_usersuboption_extension">
+                            <label for="Insert_UserSubOption_Extension">پسوند فایل</label>
+                            <input id="Insert_UserSubOption_Extension" name="Insert_UserSubOption_Extension" class="form-control mt-2" placeholder="جستجو و انتخاب پسوند..." style="padding: 2px !important;">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserSubOption_FileSize">حجم فایل (مگابایت)</label>
+                            <input type="number" class="form-control mt-2" id="Insert_UserSubOption_FileSize" placeholder="حجم فایل (مگابایت) را وارد نمایید" value="0" min="0" max="30">
+                        </div>
+                    </div>
+                    <div id="Insert_UserSubOption_TextArea_Area" style="display:none">
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserSubOption_MaxLength">حداکثر تعداد کاراکتر</label>
+                            <input type="number" class="form-control mt-2" id="Insert_UserSubOption_MaxLength" placeholder="حداکثر تعداد کاراکتر را وارد نمایید" value="0" min="0">
+                        </div>
+                    </div>
+                    <div class="form-group mb-4">
+                        <div class="form-group mb-4">
+                            <label for="Insert_UserSubOption_ToolTip">متن معرفی ابزار</label>
+                            <textarea class="form-control mt-2" id="Insert_UserSubOption_ToolTip" rows="5" placeholder="توضیحات مورد نیاز برای اطلاع کاربر را وارد نمایید..."></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="Insert_UserSubOption()">افزودن</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_UserSubOption_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Insert UserOption_Items Modal -->
+<div class="modal fade bd-example-modal-lg" id="Insert_UserOption_Items_Modal" data-parent_catid="" data-parent_row_id="" data-parent_row_class="" data-parent_data_id="">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">اطلاعات آیتم‌های آپشن</h4>
+                <button type="button" class="close modal_close_btn" onclick="HideModal(this.dataset.id)" data-id="Insert_UserOption_Items_Modal">
+                    &times;
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form class="row">
+                    <div class="form-group mb-4 col-lg-6 col-md-6 col-sm-12">
+                        <label for="Insert_UserOption_Items_Category">دسته بندی</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Items_Category" data-catid="" disabled>
+                    </div>
+                    <div class="form-group mb-4 col-lg-6 col-md-6 col-sm-12">
+                        <label for="Insert_UserOption_Items_OptionType">نوع ابزار</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Items_OptionType" data-optiontype="" disabled>
+                    </div>
+                    <div class="form-group mb-4 col-lg-6 col-md-6 col-sm-12">
+                        <label for="Insert_UserOption_Items_ItemGroup">انتخاب گروه آیتم</label>
+                        <select id="Insert_UserOption_Items_ItemGroup" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value='A'>گروه A</option>
+                            <option value='B'>گروه B</option>
+                            <option value='C'>گروه C</option>
+                            <option value='D'>گروه D</option>
+                            <option value='E'>گروه E</option>
+                            <option value='F'>گروه F</option>
+                            <option value='G'>گروه G</option>
+                        </select>
+                    </div>
+                    <div id="Insert_UserOption_Items_ParentItem_ParentTag" class="form-group mb-4 col-lg-6 col-md-6 col-sm-12" style="display:none">
+                        <label for="Insert_UserOption_Items_ParentItem">انتخاب والد آیتم</label>
+                        <select id="Insert_UserOption_Items_ParentItem" class="form-select mt-2" style="height: 39px !important;font-family:IRANSans !important;">
+                            <option value="0">آیتم والد را انتخاب کنید</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-4 col-lg-6 col-md-6 col-sm-12">
+                        <label for="Insert_UserOption_Items_Name">عنوان آیتم</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Items_Name" placeholder="عنوان آیتم را وارد نمایید">
+                    </div>
+                    <div class="form-group mb-4 col-lg-6 col-md-6 col-sm-12">
+                        <label for="Insert_UserOption_Items_Price">اختلاف قیمت</label>
+                        <input type="text" class="form-control mt-2" id="Insert_UserOption_Items_Price" onkeyup="Comma_Plus(this)" placeholder="اختلاف قیمت را وارد نمایید" value="0">
+                    </div>
+
+                    <div class="form-group mb-2 mt-3 col-lg-12 col-md-12 col-sm-12">
+                        <button id="Add_Or_Update_UserOption_Item" type="button" class="btn btn-primary" onclick="Add_Or_Update_UserOption_Item_Func()" data-parent_table_id="" data-parent_row_id="">ثبت</button>
+                        <button id="Reset_UserOption_Item" type="button" class="btn btn-warning" onclick="Reset_UserOption_Item_Func()">بازنشانی</button>
+                    </div>
+
+                    <div class="w-100 col-12 mt-4">
+                        <div class="modal_title_header_display item_table_parent mb-2 w-100">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <h5 style="margin-bottom: 0.5rem !important;">گروه آیتم‌های آپشن</h5>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-12">
+                                <input id="SearchItemInput" type="text" class="form-control" value="" placeholder="جستجو بر اساس مقادیر فیلد ها" onkeyup="Search_Useroption_Item_Func()" />
+                            </div>
+                        </div>
+                        <div class="table-responsive js_tbl_list item_table_parent">
+                            <table id="Insert_UserOption_Items_Modal_Items_Table" class="table table-striped mb-3" data-parent_table_id="" style="display:none">
+                                <thead id="Insert_UserOption_Items_Modal_Items_Table_THead" class="table-dark">
+                                    <tr>
+                                        <th>عنوان</th>
+                                        <th>نوع آپشن</th>
+                                        <th>قیمت</th>
+                                        <th>گروه آیتم</th>
+                                        <th class="compact-column">وضعیت بروزرسانی</th>
+                                        <th class="compact-column">نوع داده</th>
+                                        <th class="compact-column">ویرایش</th>
+                                        <th class="compact-column">حذف</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="Insert_UserOption_Items_Modal_Items_Table_TBody" class="table-border-bottom-0">
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="Insert_UserOption_Items_Modal_Items_NoResult" class="item_table_parent" style="display:block">
+                            <div>
+                                <div class="no-products">
+                                    <div class="icon">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                    </div>
+                                    <div id="UserOption_NoResult_Text">لیست آیتم‌ها برای این آپشن خالی است!</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="update_items_pagination_controls" class="pagination-controls"></div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer item_table_parent">
+                <button type="button" class="btn btn-primary" onclick="Submit_UserOption_Items_Changes()">اعمال تغییرات</button>
+                <button type="button" class="btn btn-secondary" onclick="HideModal(this.dataset.id)" data-id="Insert_UserOption_Items_Modal">بستن</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="~/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/select2.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/select2/i18n/fa.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bootstrap-select/i18n/defaults-fa_IR.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/tagify/tagify.js"></script>
+    <script src="~/admintemplate/assets/js/forms-tagify.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/bloodhound/bloodhound.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/dropzone/dropzone.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-file-upload.js"></script>
+    <script src="~/customjs/products/ProductCreate.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/jquery-sticky/jquery-sticky.js"></script>
+    <script src="~/AdminTemplate/assets/js/form-layouts.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/cleavejs/cleave.js"></script>
+    <script src="~/AdminTemplate/assets/vendor/libs/jquery-repeater/jquery-repeater.js"></script>
+    <script src="~/AdminTemplate/assets/js/forms-extras.js"></script>
+
+    <script>
+
+        const previewTemplate1 =
+            `<div class="dz-preview dz-file-preview">
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail">
+                                        <img data-dz-thumbnail="" alt="" src="">
+                                        <span class="dz-nopreview">No preview</span>
+                                        <div class="dz-success-mark">
+                                            <div class="dz-error-mark">
+                                                <svg width="54px" height="54px">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M23.5,31.8431458 L44.7928932,10.5502525 C45.1834175,10.1597283 45.8165825,10.1597283 46.2071068,10.5502525 L48.7071068,13.0502525 C49.0976311,13.4407767 49.0976311,14.0739418 48.7071068,14.464466 L24.7071068,38.464466 C24.3165825,38.8550204 23.6834175,38.8550204 23.2928932,38.464466 L13.2928932,28.464466 C12.9023689,28.0739418 12.9023689,27.4407767 13.2928932,27.0502525 L15.7928932,24.5502525 C16.1834175,24.1597283 16.8165825,24.1597283 17.2071068,24.5502525 L23.5,31.8431458 Z" fill="#FFFFFF"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="dz-error-mark">
+                                        </div>
+                                        <div class="dz-error-message">
+                                            <span data-dz-errormessage=""></span>
+                                        </div>
+                                        <div class="dz-progress">
+                                            <span class="dz-upload" data-dz-uploadprogress></span>
+                                        </div>
+                                            </div>
+                                    <div class="dz-filename" data-dz-name=""></div>
+                                    <div class="dz-size" data-dz-size=""><strong></strong> MB</div>
+                                </div>
+                            </div>`
+
+        const dropzoneMulti1 = new Dropzone('#dropzone-multi-1', {
+            previewTemplate: previewTemplate1,
+            parallelUploads: 1,
+            maxFilesize: 6,
+            addRemoveLinks: true,
+            dictRemoveFile: "حذف فایل",
+            dictCancelUpload: "لغو ارسال"
+        });
+
+        const previewTemplate2 =
+            `<div class="dz-preview dz-file-preview">
+                                <div class="dz-details">
+                                    <div class="dz-thumbnail">
+                                                <img data-dz-thumbnail="" alt="" src="/AdminTemplate/assets/img/dropzonepreview/pdf/pdfpreview.png">
+                                        <span class="dz-nopreview">No preview</span>
+                                        <div class="dz-success-mark">
+                                            <div class="dz-error-mark">
+                                                <svg width="54px" height="54px">
+                                                    <g fill="none" fill-rule="evenodd">
+                                                        <path d="M23.5,31.8431458 L44.7928932,10.5502525 C45.1834175,10.1597283 45.8165825,10.1597283 46.2071068,10.5502525 L48.7071068,13.0502525 C49.0976311,13.4407767 49.0976311,14.0739418 48.7071068,14.464466 L24.7071068,38.464466 C24.3165825,38.8550204 23.6834175,38.8550204 23.2928932,38.464466 L13.2928932,28.464466 C12.9023689,28.0739418 12.9023689,27.4407767 13.2928932,27.0502525 L15.7928932,24.5502525 C16.1834175,24.1597283 16.8165825,24.1597283 17.2071068,24.5502525 L23.5,31.8431458 Z" fill="#FFFFFF"></path>
+                                                    </g>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="dz-error-mark">
+                                        </div>
+                                        <div class="dz-error-message">
+                                            <span data-dz-errormessage=""></span>
+                                        </div>
+                                        <div class="dz-progress">
+                                            <span class="dz-upload" data-dz-uploadprogress></span>
+                                        </div>
+                                            </div>
+                                    <div class="dz-filename" data-dz-name=""></div>
+                                    <div class="dz-size" data-dz-size=""><strong></strong> MB</div>
+                                </div>
+                            </div>`
+
+        const dropzoneMulti2 = new Dropzone('#dropzone-multi-2', {
+            previewTemplate: previewTemplate2,
+            parallelUploads: 1,
+            maxFilesize: 6,
+            addRemoveLinks: true,
+            dictRemoveFile: "حذف فایل",
+            dictCancelUpload: "لغو ارسال"
+        });
+
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var currentButton = null;
+            var colid = null;
+
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'top',
+                container: 'body'
+            }).on('shown.bs.tooltip', function () {
+                var $tooltip = $('.tooltip');
+                var $button = $(this);
+                var buttonOffset = $button.offset();
+                var tooltipHeight = $tooltip.outerHeight();
+                var buttonHeight = $button.outerHeight();
+
+                $tooltip.css({
+                    top: buttonOffset.top - tooltipHeight,
+                    left: buttonOffset.left + ($button.outerWidth() / 2) - ($tooltip.outerWidth() / 2)
+                });
+            });
+
+            document.getElementById("Brands").parentNode.classList.add("custom-width");
+            document.getElementById("Colors").parentNode.classList.add("custom-width-plus");
+
+            document.getElementById("Delivery_Period_MinTime").value = "1";
+            document.getElementById("Delivery_Period_MaxTime").value = "1";
+
+            CKEDITOR.replace('Product_Review_Desc', {
+                height: 220,
+                language: 'fa',
+                contentsLangDirection: 'rtl',
+                extraAllowedContent: 'audio[*]{*}(*); source[*]{*}(*); iframe[*]{*}(*);video[*]{*}(*); source[*]{*}(*);'
+            });
+
+            var addButton = document.getElementById('Btn_Add_LongDesc_Item');
+
+            addButton.addEventListener('click', function () {
+                AddNewOption();
+            });
+
+            var editButton = document.getElementById('Btn_Edit_LongDesc_Item');
+
+            editButton.addEventListener('click', function () {
+                EditOption();
+            });
+
+            var refreshButton = document.getElementById('Btn_Refresh_LongDesc_Item');
+
+            refreshButton.addEventListener('click', function () {
+                RefreshForm();
+            });
+
+            const fileExtensions = [
+                { value: 'jpeg', text: 'jpeg' },
+                { value: 'webp', text: 'webp' },
+                { value: 'tiff', text: 'tiff' },
+                { value: 'heic', text: 'heic' },
+                { value: 'avif', text: 'avif' },
+                { value: 'jpg', text: 'jpg' },
+                { value: 'jpe', text: 'jpe' },
+                { value: 'png', text: 'png' },
+                { value: 'tif', text: 'tif' },
+                { value: 'ico', text: 'ico' },
+                { value: 'gif', text: 'gif' },
+                { value: 'bmp', text: 'bmp' },
+                { value: 'pdf', text: 'pdf' },
+                { value: 'zip', text: 'zip' },
+                { value: 'rar', text: 'rar' },
+            ];
+
+            const tagifyUserListEl2 = document.querySelector('#TagifyUserList2');
+            const tagifyUserListEl3 = document.querySelector('#TagifyUserList3');
+            const Insert_UserOption_Extension = document.querySelector('#Insert_UserOption_Extension');
+            const Insert_UserSubOption_Extension = document.querySelector('#Insert_UserSubOption_Extension');
+            const Update_UserOption_Extension = document.querySelector('#Update_UserOption_Extension');
+
+            function tagTemplate(tagData) {
+                return `
+                                        <tag title="${tagData.name}"
+                                                contenteditable='false'
+                                                spellcheck='false'
+                                                tabIndex="-1"
+                                                class="${this.settings.classNames.tag} ${tagData.class ? tagData.class : ''}"
+                                                ${this.getAttributes(tagData)}>
+                                            <x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x>
+                                            <div>
+                                                <span class='tagify__tag-text' data-id="${tagData.value}">${tagData.name}</span>
+                                            </div>
+                                        </tag>
+                                     `;
+            }
+
+            function suggestionItemTemplate(tagData) {
+                return `
+                                            <div ${this.getAttributes(tagData)}
+                                                    class='tagify__dropdown__item align-items-center ${tagData.class ? tagData.class : ''}'
+                                                    tabindex="0"
+                                                    role="option">
+                                                <strong>${tagData.name}</strong>
+                                            </div>
+                                        `;
+            }
+
+            function setupTagify(el, url) {
+
+                $.ajax({
+
+                    url: url,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log('Data received:', data);
+
+                        const usersList = data.map(category => ({
+                            value: category.id,
+                            name: category.name
+                        }));
+
+                        console.log('Users List:', usersList);
+
+                        let tagify = new Tagify(el, {
+                            tagTextProp: 'name',
+                            enforceWhitelist: true,
+                            skipInvalid: true,
+                            dropdown: {
+                                closeOnSelect: false,
+                                enabled: 0,
+                                classname: 'users-list',
+                                searchKeys: ['name']
+                            },
+                            templates: {
+                                tag: tagTemplate,
+                                dropdownItem: suggestionItemTemplate
+                            },
+                            whitelist: usersList
+                        });
+
+                        tagify.on('dropdown:show dropdown:updated', onDropdownShow);
+                        tagify.on('dropdown:select', onSelectSuggestion);
+
+                        let addAllSuggestionsEl;
+
+                        function onDropdownShow(e) {
+                            let dropdownContentEl = e.detail.tagify.DOM.dropdown.content;
+
+                            if (tagify.suggestedListItems.length > 1) {
+                                addAllSuggestionsEl = getAddAllSuggestionsEl();
+
+                                dropdownContentEl.insertBefore(addAllSuggestionsEl, dropdownContentEl.firstChild);
+                            }
+                        }
+
+                        function onSelectSuggestion(e) {
+                            if (e.detail.elm == addAllSuggestionsEl) tagify.dropdown.selectAll.call(tagify);
+                        }
+
+                        function getAddAllSuggestionsEl() {
+                            return tagify.parseTemplate('dropdownItem', [
+                                {
+                                    class: 'addAll',
+                                    name: 'افزودن همه',
+                                    count: `${tagify.settings.whitelist.length} دسته‌بندی`
+                                }
+                            ]);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching categories:', error);
+                    }
+                });
+            }
+
+            function setupTagify2(el, datasource) {
+
+                const usersList = datasource.map(ext => ({
+                    value: ext.value,
+                    name: ext.text
+                }));
+
+                let tagify = new Tagify(el,
+                    {
+                        tagTextProp: 'name',
+                        enforceWhitelist: true,
+                        skipInvalid: true,
+                        dropdown: {
+                            closeOnSelect: false,
+                            enabled: 0,
+                            classname: 'users-list',
+                            searchKeys: ['name']
+                        },
+                        templates: {
+                            tag: tagTemplate,
+                            dropdownItem: suggestionItemTemplate
+                        },
+                        whitelist: usersList
+                    });
+
+                tagify.on('dropdown:show dropdown:updated', onDropdownShow);
+                tagify.on('dropdown:select', onSelectSuggestion);
+
+                let addAllSuggestionsEl;
+
+                function onDropdownShow(e) {
+                    let dropdownContentEl = e.detail.tagify.DOM.dropdown.content;
+
+                    if (tagify.suggestedListItems.length > 1) {
+                        addAllSuggestionsEl = getAddAllSuggestionsEl();
+                        dropdownContentEl.insertBefore(addAllSuggestionsEl, dropdownContentEl.firstChild);
+                    }
+                }
+
+                function onSelectSuggestion(e) {
+                    if (e.detail.elm == addAllSuggestionsEl) {
+                        tagify.dropdown.selectAll.call(tagify);
+                    }
+                }
+
+                function getAddAllSuggestionsEl() {
+                    return tagify.parseTemplate('dropdownItem', [
+                        {
+                            class: 'addAll',
+                            name: 'افزودن همه',
+                            count: `${tagify.settings.whitelist.length} پسوند فایل`
+                        }
+                    ]);
+                }
+            }
+
+            setupTagify(tagifyUserListEl2, '/admin/Products/GetCategories');
+            setupTagify(tagifyUserListEl3, '/admin/Products/GetCategories');
+            setupTagify2(Insert_UserOption_Extension, fileExtensions);
+            setupTagify2(Insert_UserSubOption_Extension, fileExtensions);
+            setupTagify2(Update_UserOption_Extension, fileExtensions);
+        });
+
+    </script>
+
+    <script>
+
+        function Toggle_Related_ProductList() {
+
+            if (document.getElementById("Related_Product_List").classList.contains("active")) {
+
+                document.getElementById("Related_Product_List_Header").classList.remove("toggle_menu_header");
+                document.getElementById("Operation_Tab").classList.remove("operation_tab");
+                document.getElementById("Operation_Tab_Parent").classList.add("operation_tab_parent");
+            }
+            else {
+
+                document.getElementById("Related_Product_List_Header").classList.add("toggle_menu_header");
+                document.getElementById("Operation_Tab").classList.add("operation_tab");
+                document.getElementById("Operation_Tab_Parent").classList.remove("operation_tab_parent");
+            }
+        }
+
+        function ToggleSarchResult() {
+
+            if (document.getElementById("Search_Result").classList.contains("active")) {
+
+                document.getElementById("Search_Result_Header").classList.remove("toggle_menu_header");
+                document.getElementById("Operation_Tab").classList.remove("operation_tab");
+                document.getElementById("Operation_Tab_Parent").classList.add("operation_tab_parent");
+            }
+            else {
+
+                document.getElementById("Search_Result_Header").classList.add("toggle_menu_header");
+                document.getElementById("Operation_Tab").classList.add("operation_tab");
+                document.getElementById("Operation_Tab_Parent").classList.remove("operation_tab_parent");
+            }
+        }
+
+        function RemoveProduct(button) {
+
+            let childscount = document.querySelectorAll("#Related_Product_List_Items .js_child").length;
+            console.log(childscount);
+            const productitem = button.parentElement.parentElement;
+
+            if (parseInt(childscount) == 1) {
+
+                productitem.remove();
+                document.getElementById("Related_Product_List").style.display = "none";
+            }
+            else {
+
+                productitem.remove();
+            }
+        }
+
+        function Remove_SearchResult_Product(button) {
+
+            let childscount = document.querySelectorAll("#Search_Result_Items .js_child").length;
+            const productitem = button.parentElement.parentElement;
+
+            if (parseInt(childscount) == 1) {
+
+                productitem.remove();
+                document.getElementById("Search_Result").style.display = "none";
+            }
+            else {
+
+                productitem.remove();
+            }
+        }
+
+        function AddProductToList(button, id) {
+
+            let childscount = document.querySelectorAll("#Search_Result_Items .js_child").length;
+
+            let imgsrc = document.getElementById("product_img_" + id.toString()).src;
+            let relativePath = new URL(imgsrc).pathname;
+            let title = document.getElementById("product_title_" + id.toString()).innerText;
+
+            let Row = document.createElement('div');
+            Row.classList = "col-12 col-md-3 mb_class js_child";
+            Row.setAttribute('data-productid', id.toString());
+
+            Row.innerHTML = `
+                                            <div class="card">
+                                                        <img src="${relativePath}" class="related_poduct_img" alt="${title}" style="border-bottom: 1px solid #eee;">
+                                                <div class="card-info">
+                                                    <span>${title}</span>
+                                                </div>
+                                                <button class="btn btn-danger remove-btn" onclick="RemoveProduct(this)">
+                                                    حذف
+                                                </button>
+                                            </div>
+                                        `;
+
+            document.getElementById("Related_Product_List").style.display = "block";
+            document.getElementById('Related_Product_List_Items').appendChild(Row);
+
+            if (parseInt(childscount) == 1) {
+
+                Remove_SearchResult_Product(button);
+                document.getElementById("Search_Result").style.display = "none";
+            }
+            else {
+
+                Remove_SearchResult_Product(button);
+            }
+        }
+
+    </script>
+}

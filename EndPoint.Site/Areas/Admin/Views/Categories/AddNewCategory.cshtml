@@ -1,4 +1,5 @@
-﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     ViewData["Title"] = "لیست دسته بندی ها";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -12,7 +13,8 @@
     <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/tagify/tagify.css">
     <link rel="stylesheet" href="~/AdminTemplate/assets/vendor/libs/bootstrap-select/bootstrap-select.css">
 }
-<div class="row container">
+@* <div class="row container"> *@
+<div class="container-xxl flex-grow-1 container-p-y row">
     <!-- Context Menu -->
     <div class="col-md-6 col-12">
         <div class="card mb-4">
