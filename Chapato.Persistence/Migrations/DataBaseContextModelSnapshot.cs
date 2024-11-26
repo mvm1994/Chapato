@@ -1230,14 +1230,14 @@ namespace Chapato.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2024, 11, 26, 16, 57, 16, 671, DateTimeKind.Local).AddTicks(1362),
+                            InsertTime = new DateTime(2024, 11, 26, 19, 12, 16, 288, DateTimeKind.Local).AddTicks(2872),
                             IsRemoved = false,
                             Name = "ادمین"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2024, 11, 26, 16, 57, 16, 671, DateTimeKind.Local).AddTicks(1405),
+                            InsertTime = new DateTime(2024, 11, 26, 19, 12, 16, 288, DateTimeKind.Local).AddTicks(3140),
                             IsRemoved = false,
                             Name = "اپراتور"
                         });

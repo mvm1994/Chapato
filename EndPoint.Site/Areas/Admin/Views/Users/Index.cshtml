@@ -12,9 +12,22 @@
 {
     <link href="~/CustomCss/Users/UserIndex.css" rel="stylesheet" />
     <link href="~/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
+    <style>
+
+        @@media screen and (min-width:991px) 
+        {
+            .parent_wrapper 
+            {
+                padding-right: 1rem !important;
+                padding-left: 3.6rem !important;
+            }
+        }
+
+    </style>
 }
 
-<div class="container-xxl flex-grow-1 container-p-y">
+<div class="container-xxl flex-grow-1 container-p-y parent_wrapper">
     <div class="card">
         <div class="row d-flex">
             <h5 class="card-header heading-color col-lg-6 col-md-6 col-sm-12">لیست کاربران</h5>
@@ -117,7 +130,7 @@
     </div>
 </div>
 
-@section Scripts 
+@section Scripts
 {
     <script src="~/sweetalert2/sweetalert2.min.js"></script>
     <script src="~/CustomJs/Users/UserIndex.js"></script>
