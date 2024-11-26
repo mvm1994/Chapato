@@ -11,6 +11,7 @@ using Chapato.Domain.Entities.Users;
 using Chapato.Domain.Entities.Products;
 using Chapato.Domain.Entities.Uploads;
 using Microsoft.Extensions.Logging;
+using Chapato.Domain.Entities.Customers_Club;
 
 namespace Chapato.Persistence.Contexts
 {
@@ -55,15 +56,26 @@ namespace Chapato.Persistence.Contexts
         /////////////////////////////////////////////////////////////////////////Uploads
         public DbSet<UploadedFile> UploadedFiles { get; set; }
 
+        /////////////////////////////////////////////////////////////////////////Customers_Club
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<CustomerInvoice> CustomerInvoices { get; set; }
+        public DbSet<ProductTemp> ProductTemps { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             SeedData(modelBuilder);
             //عدم تکراری بودن ایمیل
             modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            modelBuilder.Entity<Customer>().HasIndex(u => u.Email).IsUnique();
+            //عدم تکراری بودن شماره تلفن
+            modelBuilder.Entity<User>().HasIndex(u => u.Phone_Number).IsUnique();
+            modelBuilder.Entity<Customer>().HasIndex(u => u.PhoneNumber).IsUnique();
 
             ApplyQueryFilter(modelBuilder);
 
-            ////////////////////////////////////////////////////////////////////////
+            //////////////////////////////////////////////////////////////////////////////////////////////////
 
             base.OnModelCreating(modelBuilder);
 
@@ -161,19 +173,43 @@ namespace Chapato.Persistence.Contexts
                     v => v != null ? JsonConvert.SerializeObject(v) : "[]",
                     v => JsonConvert.DeserializeObject<List<string>>(v) ?? new List<string>());
 
+            //////////////////////////////////////////////////////////////////////////////////////////////////Customers_Club
+
+            modelBuilder.Entity<Order>()
+           .HasOne(o => o.Customer)
+           .WithMany(c => c.Orders)
+           .HasForeignKey(o => o.CustomerId)
+           .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Invoice)
+                .WithOne(i => i.Order)
+                .HasForeignKey<CustomerInvoice>(ci => ci.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.Products)
+                .WithMany(p => p.Orders)
+                .UsingEntity(j => j.ToTable("OrderProducts"));
+
         }
         private void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Role>().HasData(new Role { Id = 1, Name = UserRoles.Admin });
             modelBuilder.Entity<Role>().HasData(new Role { Id = 2, Name = UserRoles.Operator });
-            modelBuilder.Entity<Role>().HasData(new Role { Id = 3, Name = UserRoles.Customer });
         }
         private void ApplyQueryFilter(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Role>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<UserInRole>().HasQueryFilter(p => !p.IsRemoved);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            
             modelBuilder.Entity<Category>().HasQueryFilter(p => !p.IsRemoved);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            
             modelBuilder.Entity<Brand>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<Product>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<ProductImages>().HasQueryFilter(p => !p.IsRemoved);
@@ -193,7 +229,17 @@ namespace Chapato.Persistence.Contexts
             modelBuilder.Entity<ProductPriceListItems>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<ProductDocuments>().HasQueryFilter(p => !p.IsRemoved);
             modelBuilder.Entity<ColorRepository>().HasQueryFilter(p => !p.IsRemoved);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
             modelBuilder.Entity<UploadedFile>().HasQueryFilter(p => !p.IsRemoved);
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            modelBuilder.Entity<Customer>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<CustomerInvoice>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<Order>().HasQueryFilter(p => !p.IsRemoved);
+            modelBuilder.Entity<ProductTemp>().HasQueryFilter(p => !p.IsRemoved);
         }
 
     }

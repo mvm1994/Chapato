@@ -25,9 +25,9 @@
         <div class="card-body">
             <form>
                 <div class="row">
-                    <div class="col-lg-4 col-md-11 col-sm-12 mb-3">
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                         <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">نقش</label>
-                        <div class="col-sm-10 col-md-12 col-lg-10">
+                        <div class="col-sm-10">
                             <div class="input-group input-group-merge">
                                 <select id="RoleId" name="RoleId" class="selectpicker w-100 mb-2" asp-items="@ViewBag.Roles" data-style="btn-default" multiple data-icon-base="bx" data-tick-icon="bx-check text-primary"></select>
                             </div>
@@ -39,7 +39,17 @@
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-user"></i></span>
                                 <span id="basic-icon-default-fullname2" class="input-group-text" dir="ltr"></span>
-                                <input type="text" class="form-control" id="fullname" placeholder="علی رضایی" aria-label="ali rezaei" aria-describedby="basic-icon-default-fullname2">
+                                <input type="text" class="form-control" id="fullname" placeholder="وحید خدابنده‌لو" aria-label="vahid khodabandeloo" aria-describedby="basic-icon-default-fullname2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                        <label class="col-sm-2 col-form-label" for="basic-icon-default-phone">شماره تلفن</label>
+                        <div class="col-sm-10">
+                            <div class="input-group input-group-merge">
+                                <span class="input-group-text"><i class="bx bx-phone"></i></span>
+                                <span id="basic-icon-default-phone2" class="input-group-text" dir="ltr"></span>
+                                <input type="text" class="form-control" id="phone_number" placeholder="09036865685" aria-label="" aria-describedby="basic-icon-default-phone2" onblur="Validate_PhoneNumber(this,this.value)">
                             </div>
                         </div>
                     </div>
@@ -49,7 +59,7 @@
                             <div class="input-group input-group-merge">
                                 <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                                 <span id="basic-icon-default-email2" class="input-group-text" dir="ltr"></span>
-                                <input type="text" id="email" class="form-control text-start" placeholder="alirezaie1999@gmail.com" aria-label="alirezaie1999@gmail.com" aria-describedby="basic-icon-default-email2" dir="ltr">
+                                <input type="text" id="email" class="form-control text-start" placeholder="vahid.khodabandeloo@gmail.com" aria-label="vahid.khodabandeloo@gmail.com" aria-describedby="basic-icon-default-email2" dir="ltr">
                             </div>
                         </div>
                     </div>

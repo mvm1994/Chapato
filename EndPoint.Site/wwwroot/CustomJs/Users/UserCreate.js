@@ -13,7 +13,6 @@
         document.getElementById(id.toString()).classList.remove("bx-hide");
     }
 }
-
 function RegisterUser() {
     
     swal.fire({
@@ -30,6 +29,7 @@ function RegisterUser() {
 
             var roles = $("#RoleId").val();
             var email = $("#email").val();
+            var phone_number = $("#phone_number").val();
             var fullname = $("#fullname").val();
             var newPassword = $("#newPassword").val();
             var confirmPassword = $("#confirmPassword").val();
@@ -45,6 +45,7 @@ function RegisterUser() {
                 'Roles': rolesData,
                 'Email': email,
                 'FullName': fullname,
+                'Phone_Number': phone_number,  
                 'Password': newPassword,
                 'RePassword': confirmPassword
             };
@@ -68,6 +69,7 @@ function RegisterUser() {
                             $("#RoleId").val('');
                             $("#email").val('');
                             $("#fullname").val('');
+                            $("#phone_number").val('');
                             $("#newPassword").val('');
                             $("#confirmPassword").val('');
                             location.reload();
@@ -91,5 +93,21 @@ function RegisterUser() {
             });
         }
     });
+}
+function Validate_PhoneNumber(input_field,phone_number)
+{
+    const absolute_phone_number = phone_number.trim();
+
+    if (absolute_phone_number.length !== 11)
+    {
+        Swal.fire({
+            icon: 'error',
+            title: 'خطا',
+            text: 'شماره تلفن باید 11 رقم باشد.',
+            confirmButtonText: 'بسیار خب'
+        }).then(() => {
+            input_field.focus();
+        });
+    }
 }
 

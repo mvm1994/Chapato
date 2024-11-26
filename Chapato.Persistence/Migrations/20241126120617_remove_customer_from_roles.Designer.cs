@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chapato.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20241124220145_init_mig")]
-    partial class init_mig
+    [Migration("20241126120617_remove_customer_from_roles")]
+    partial class remove_customer_from_roles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1036,23 +1036,16 @@ namespace Chapato.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8236),
+                            InsertTime = new DateTime(2024, 11, 26, 15, 36, 16, 926, DateTimeKind.Local).AddTicks(1599),
                             IsRemoved = false,
                             Name = "ادمین"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8402),
+                            InsertTime = new DateTime(2024, 11, 26, 15, 36, 16, 926, DateTimeKind.Local).AddTicks(1645),
                             IsRemoved = false,
                             Name = "اپراتور"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            InsertTime = new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8483),
-                            IsRemoved = false,
-                            Name = "مشتری"
                         });
                 });
 
@@ -1085,6 +1078,10 @@ namespace Chapato.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Phone_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<DateTime?>("RemoveTime")
                         .HasColumnType("datetime2");
 
@@ -1094,6 +1091,9 @@ namespace Chapato.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("Phone_Number")
                         .IsUnique();
 
                     b.ToTable("Users");

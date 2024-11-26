@@ -1,8 +1,8 @@
-﻿
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, LazZiya.TagHelpers
 @using Chapato.Application.Services.Users.Queries.GetUsers
 @model ResultGetUserDto
+
 @{
     ViewData["Title"] = "لیست کاربران";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -28,16 +28,47 @@
                 <thead class="table-dark">
                     <tr>
                         <th>مشخصات فردی</th>
+                        <th>شماره تلفن</th>
                         <th>پست الکترونیک</th>
+                        <th>نقش ها</th>
                         <th>عمل‌ها</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody" class="table-border-bottom-0">
+
                     @foreach (var item in Model.Users)
                     {
                         <tr>
                             <td>@item.FullName</td>
+                            <td>@item.PhoneNumber</td>
                             <td>@item.Email</td>
+                            <td>
+                                @foreach (var role in item.UserRoles)
+                                {
+                                    if (role == "ادمین")
+                                    {
+                                        <span class="badge bg-label-primary me-1"
+                                              style="font-weight: bold !important; height: 38px !important; line-height: 25px !important;">
+                                            @role
+                                        </span>
+                                    }
+                                    else if (role == "اپراتور")
+                                    {
+                                        <span class="badge bg-label-secondary me-1"
+                                              style="font-weight: bold !important; height: 38px !important; line-height: 25px !important;">
+                                            @role
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge @(item.UserRoles.IndexOf(role) % 3 == 0 ? "bg-label-warning" : item.UserRoles.IndexOf(role) % 3 == 1 ? "bg-label-warning" : "bg-label-secondary") me-1"
+                                              style="font-weight: bold !important; height: 38px !important; line-height: 25px !important;">
+                                            @role
+                                        </span>
+                                    }
+                                }
+                            </td>
+
                             <td>
                                 <a class="btn btn-outline-info grid-btn" asp-area="Admin" asp-controller="Users" asp-action="Edit" asp-route-UserId="@item.Id">ویرایش</a>
                                 <button class="btn btn-outline-danger grid-btn" onclick="DeleteUser('@item.Id')">حذف</button>

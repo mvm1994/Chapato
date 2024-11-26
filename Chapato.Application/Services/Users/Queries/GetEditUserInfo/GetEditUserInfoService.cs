@@ -30,6 +30,7 @@ namespace Chapato.Application.Services.Users.Queries.GetEditUserInfo
             {
                 Email = user.Email,
                 FullName = user.FullName,
+                Phone_Number = user.Phone_Number,
                 Password = user.Password,
                 Roles = roles,
                 UserId = request.UserId

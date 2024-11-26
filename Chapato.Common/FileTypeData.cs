@@ -8,6 +8,6 @@ namespace Chapato.Common
 {
     public class FileTypeData
     {
-        public string FileType { get; set; }
+        public string filetype { get; set; }
     }
 }

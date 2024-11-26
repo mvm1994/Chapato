@@ -50,12 +50,13 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(string Email, string FullName, List<RolesInRegisterUserDto> Roles, string Password, string RePassword)
+        public IActionResult Create(string Email, string FullName, string Phone_Number, List<RolesInRegisterUserDto> Roles, string Password, string RePassword)
         {
             var result = _userFacad.RegisterUserService.Execute(new RequestRegisterUserDto
             {
                 Email = Email,
                 FullName = FullName,
+                Phone_Number= Phone_Number,
                 Roles = Roles,
                 Password = Password,
                 RePassword = RePassword
@@ -105,12 +106,13 @@ namespace EndPoint.Site.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(long UserId, string FullName, string Email, List<UserRolesDto> Roles)
+        public IActionResult Edit(long UserId, string FullName,string Phone_Number, string Email, List<UserRolesDto> Roles)
         {
             var result = _userFacad.EditUserService.Execute(new RequestEditUserDto
             {
                 Email = Email,
                 FullName = FullName,
+                Phone_Number = Phone_Number,
                 Roles = Roles,
                 UserId = UserId
             }, HttpContext);

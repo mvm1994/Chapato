@@ -5002,8 +5002,7 @@ function getFileTypeSync() {
 
                                                                                 // Function to set accepted files based on file type
                                                                                 function setAcceptedFiles(fileType) {
-                                                                                    return (fileType === "images") ? "image/jpeg,image/png,image/jpg" : ".pdf";
-                                                                                }
+                                                                                    return (fileType === "images") ? ".webp,.png,.jpg,.jpeg,.ico" : ".pdf";                                                                                }
 
                                                                                 // Set accepted files based on file type
                                                                                 let acceptedFiles = setAcceptedFiles(fileType);

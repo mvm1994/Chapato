@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Chapato.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class init_mig : Migration
+    public partial class Initial_DB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -134,6 +134,7 @@ namespace Chapato.Persistence.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone_Number = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -683,9 +684,9 @@ namespace Chapato.Persistence.Migrations
                 columns: new[] { "Id", "InsertTime", "IsRemoved", "Name", "RemoveTime", "UpdateTime" },
                 values: new object[,]
                 {
-                    { 1L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8236), false, "ادمین", null, null },
-                    { 2L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8402), false, "اپراتور", null, null },
-                    { 3L, new DateTime(2024, 11, 25, 1, 31, 44, 684, DateTimeKind.Local).AddTicks(8483), false, "مشتری", null, null }
+                    { 1L, new DateTime(2024, 11, 26, 14, 38, 42, 586, DateTimeKind.Local).AddTicks(1126), false, "ادمین", null, null },
+                    { 2L, new DateTime(2024, 11, 26, 14, 38, 42, 586, DateTimeKind.Local).AddTicks(1176), false, "اپراتور", null, null },
+                    { 3L, new DateTime(2024, 11, 26, 14, 38, 42, 586, DateTimeKind.Local).AddTicks(1188), false, "مشتری", null, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -809,6 +810,12 @@ namespace Chapato.Persistence.Migrations
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Phone_Number",
+                table: "Users",
+                column: "Phone_Number",
                 unique: true);
         }
 

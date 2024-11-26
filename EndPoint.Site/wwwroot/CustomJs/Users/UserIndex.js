@@ -1,5 +1,6 @@
 ﻿
-function getCookie(name) {
+function getCookie(name)
+{
     const cookieString = document.cookie;
     const cookies = cookieString.split('; ');
 
@@ -11,8 +12,8 @@ function getCookie(name) {
     }
     return null;
 }
-function DeleteUser(UserId) {
-
+function DeleteUser(UserId)
+{
     swal.fire({
         title: 'حذف کاربر',
         text: "در مورد حذف کاربر مطمئن هستید؟",
@@ -67,8 +68,8 @@ function DeleteUser(UserId) {
         }
     });
 }
-function ChangeUserStatus(UserId) {
-
+function ChangeUserStatus(UserId)
+{
     swal.fire({
         title: 'تغییر وضعیت کاربر',
         text: "در مورد تغییر وضعیت کاربر مطمئن هستید؟",
@@ -184,7 +185,8 @@ function searchResult() {
     const url = `/Admin/Users/Index?searchkey=${encodeURIComponent(searchValue)}`;
     window.location.href = url;
 }
-function CheckEvent(event) {
+function CheckEvent(event)
+{
     if (event.key === 'Enter') {
 
         event.preventDefault();

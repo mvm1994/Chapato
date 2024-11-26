@@ -4,6 +4,7 @@ using Chapato.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Chapato.Persistence.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    partial class DataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20241126131548_insert_customers_and_orders_and_products_and_invoices")]
+    partial class insert_customers_and_orders_and_products_and_invoices
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,7 +84,13 @@ namespace Chapato.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<int>("DepositAmount")
+                        .HasColumnType("int");
+
                     b.Property<int>("DiscountAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountPercent")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("InsertTime")
@@ -1230,14 +1239,14 @@ namespace Chapato.Persistence.Migrations
                         new
                         {
                             Id = 1L,
-                            InsertTime = new DateTime(2024, 11, 26, 16, 57, 16, 671, DateTimeKind.Local).AddTicks(1362),
+                            InsertTime = new DateTime(2024, 11, 26, 16, 45, 48, 324, DateTimeKind.Local).AddTicks(5395),
                             IsRemoved = false,
                             Name = "ادمین"
                         },
                         new
                         {
                             Id = 2L,
-                            InsertTime = new DateTime(2024, 11, 26, 16, 57, 16, 671, DateTimeKind.Local).AddTicks(1405),
+                            InsertTime = new DateTime(2024, 11, 26, 16, 45, 48, 324, DateTimeKind.Local).AddTicks(5433),
                             IsRemoved = false,
                             Name = "اپراتور"
                         });

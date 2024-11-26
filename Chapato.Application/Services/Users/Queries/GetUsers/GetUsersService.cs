@@ -1,10 +1,8 @@
 ﻿using Chapato.Application.Interfaces.Contexts;
 using Chapato.Common;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chapato.Application.Services.Users.Queries.GetUsers
 {
@@ -16,29 +14,47 @@ namespace Chapato.Application.Services.Users.Queries.GetUsers
         {
             _context = context;
         }
+
         public ResultGetUserDto Execute(RequestGetUserDto request)
         {
-            var users = _context.Users.AsQueryable();
-            int rowscount = 0;
+            var usersQuery = _context.Users
+                .Include(u => u.UserInRoles)
+                .ThenInclude(uir => uir.Role)
+                .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
-                users = users.Where(p => p.FullName.Contains(request.SearchKey) || p.Email.Contains(request.SearchKey));
+                usersQuery = usersQuery.Where(u =>
+                    u.FullName.Contains(request.SearchKey) ||
+                    u.Email.Contains(request.SearchKey) ||
+                    u.Phone_Number.Contains(request.SearchKey) ||
+                    u.UserInRoles.Any(uir => uir.Role.Name.Contains(request.SearchKey)));
             }
 
-            var userlist = users.ToPaged(request.Page, request.PageSize, out rowscount).Select(p => new GetUsersDto
-            {
-                Email = p.Email,
-                FullName = p.FullName,
-                Id = p.Id,
-                IsActive = p.IsActive
+            int rowsCount = usersQuery.Count();
 
-            }).OrderByDescending(u => u.Id).ToList();
+            var pagedUsers = usersQuery
+                .OrderByDescending(u => u.Id)
+                .Skip((request.Page - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .ToList();
+
+            var userList = pagedUsers.Select(user => new GetUsersDto
+            {
+                Id = user.Id,
+                FullName = user.FullName,
+                PhoneNumber = user.Phone_Number,
+                Email = user.Email,
+                IsActive = user.IsActive,
+                UserRoles = user.UserInRoles
+                             .Select(uir => uir.Role.Name)
+                             .ToList()
+            }).ToList();
 
             return new ResultGetUserDto
             {
-                Users = userlist,
-                Rows = rowscount,
+                Users = userList,
+                Rows = rowsCount,
                 CurrentPage = request.Page,
                 PageSize = request.PageSize
             };

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Chapato.Domain.Entities.Customers_Club;
 
 namespace Chapato.Application.Interfaces.Contexts
 {
@@ -45,6 +46,12 @@ namespace Chapato.Application.Interfaces.Contexts
 
         /////////////////////////////////////////////////////////////////////////Uploads
         DbSet<UploadedFile> UploadedFiles { get; set; }
+
+        /////////////////////////////////////////////////////////////////////////Customers_Club
+        DbSet<Customer> Customers { get; set; }
+        DbSet<Order> Orders { get; set; }
+        DbSet<CustomerInvoice> CustomerInvoices { get; set; }
+        DbSet<ProductTemp> ProductTemps { get; set; }
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
         int SaveChanges();

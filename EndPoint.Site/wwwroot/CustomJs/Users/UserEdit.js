@@ -18,10 +18,10 @@ function EditUser(UserId) {
 
     var userid = UserId;
     var fullname = $('#Edit_FullName').val();
+    var phone_number = $('#Edit_PhoneNumber').val();
     var email = $('#Edit_Email').val();
     var roles = $('#Edit_RoleId').val();
 
-    // Ensure roles is always an array
     var rolesArray = Array.isArray(roles) ? roles : [roles];
 
     var rolesData = rolesArray.map(function (role) {
@@ -31,6 +31,7 @@ function EditUser(UserId) {
     var postData = {
         'UserId': userid,
         'FullName': fullname,
+        'Phone_Number': phone_number,
         'Roles': rolesData,
         'Email': email
     };
@@ -71,4 +72,19 @@ function EditUser(UserId) {
             alert(request.responseText);
         }
     });
+}
+function Validate_PhoneNumber(input_field, phone_number)
+{
+    const absolute_phone_number = phone_number.trim();
+
+    if (absolute_phone_number.length !== 11) {
+        Swal.fire({
+            icon: 'error',
+            title: 'خطا',
+            text: 'شماره تلفن باید 11 رقم باشد.',
+            confirmButtonText: 'بسیار خب'
+        }).then(() => {
+            input_field.focus();
+        });
+    }
 }
